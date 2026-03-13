@@ -16,7 +16,7 @@ type MenuColumn = {
 
 const productsMenu: MenuColumn[] = [
   {
-    heading: "Products",
+    heading: "Virtual Office Platform",
     items: [
       { title: "Virtual Office", description: "Company Visualization", href: "/virtual-office" },
       { title: "Drop-In Meetings", description: "Virtual Meeting Rooms", href: "/drop-in-meetings" },
@@ -121,10 +121,15 @@ function MegaMenu({ columns }: { columns: MenuColumn[] }) {
               <li key={item.title}>
                 <a
                   href={item.href}
-                  className="group/link inline-flex items-center gap-1 text-2xl font-semibold tracking-[-0.5px] text-white/90 transition-colors hover:text-white"
+                  className="group/link block"
                 >
-                  {item.title}
-                  <svg className="inline-block w-3 h-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <span className="inline-flex items-center gap-1 text-2xl font-semibold tracking-[-0.5px] text-white/90 transition-colors group-hover/link:text-white">
+                    {item.title}
+                    <svg className="inline-block w-3 h-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </span>
+                  {item.description && (
+                    <span className="block text-sm text-white/30 mt-0.5">{item.description}</span>
+                  )}
                 </a>
               </li>
             ))}
