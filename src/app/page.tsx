@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-[#0c0c0e]">
@@ -9,7 +11,7 @@ export default function Home() {
         {/* Background image */}
         <div className="absolute inset-0 pointer-events-none">
           <Image
-            src="/images/hero-bg.jpg"
+            src={`${basePath}/images/hero-bg.jpg`}
             alt=""
             fill
             className="object-cover"
@@ -56,7 +58,7 @@ export default function Home() {
               <div className="absolute left-2 top-[7.5px] flex w-[300px] items-center justify-between rounded-2xl bg-white px-4 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
                 <div className="relative size-6 overflow-hidden rounded-full">
                   <Image
-                    src="/images/avatar.png"
+                    src={`${basePath}/images/avatar.png`}
                     alt=""
                     width={24}
                     height={24}

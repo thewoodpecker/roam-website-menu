@@ -329,7 +329,7 @@ export default function Navbar() {
         {/* Center logo */}
         <div className="flex items-center justify-center">
           <Image
-            src="/images/roam-logo.png"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/roam-logo.png`}
             alt="Roam"
             width={109}
             height={32}
