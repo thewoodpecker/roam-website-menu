@@ -1,65 +1,148 @@
 import Image from "next/image";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex min-h-screen flex-col bg-[#0c0c0e]">
+      {/* Hero Section */}
+      <section className="relative flex h-screen w-full flex-col items-start justify-end border-b border-white/10">
+        {/* Background image */}
+        <div className="absolute inset-0 pointer-events-none">
+          <Image
+            src="/images/hero-bg.jpg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[37.66%] to-[rgba(0,0,0,0.6)] to-[83.75%]" />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Navbar */}
+        <Navbar />
+
+        {/* Hero Content */}
+        <div className="relative z-10 flex w-full flex-col items-center justify-end pb-10 px-10">
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center gap-1">
+                {/* Badge */}
+                <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-3 py-1.5 backdrop-blur-[50px]">
+                  <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
+                    style={{ fontFamily: "'Possibility', sans-serif" }}
+                  >
+                    AI-POWERED VIRTUAL OFFICE PLATFORM
+                  </span>
+                </div>
+                {/* Heading */}
+                <h1
+                  className="text-center text-[40px] font-bold uppercase leading-[50px] tracking-[-1px] text-white"
+                  style={{ fontFamily: "'Possibility', sans-serif" }}
+                >
+                  Roam Makes Remote Work
+                </h1>
+              </div>
+              {/* Subtitle */}
+              <p className="text-center text-base font-normal leading-6 tracking-[-0.32px] text-white/50">
+                Virtual Office, Drop-In Meetings, AI Notetaker, AI Assistant, Screen Recorder, AI Agents.
+                <br />
+                Unleash Productivity, Culture &amp; AI.
+              </p>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="relative flex h-[68px] w-[626px] items-center rounded-3xl border border-white/20 bg-white/10 backdrop-blur-[30px]">
+              {/* Demo Button */}
+              <div className="absolute left-2 top-[7.5px] flex w-[300px] items-center justify-between rounded-2xl bg-white px-4 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
+                <div className="relative size-6 overflow-hidden rounded-full">
+                  <Image
+                    src="/images/avatar.png"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="rounded-full object-cover"
+                  />
+                </div>
+                <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
+                  Demo
+                </span>
+                <svg
+                  width="12"
+                  height="7"
+                  viewBox="0 0 12 7"
+                  fill="none"
+                  className="text-[#1a1a1a]"
+                >
+                  <path
+                    d="M1 1L6 6L11 1"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              {/* Free Trial Button */}
+              <div className="absolute right-2 top-[7.5px] flex w-[300px] items-center justify-center rounded-2xl bg-white px-4 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_0px_rgba(0,0,0,0.08)]">
+                <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#414141]">
+                  Free Trial
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+
+        {/* Magicast sidebar - left overlay */}
+        <div className="absolute left-4 top-20 z-10 flex flex-col items-start gap-4">
+          <div className="pl-1">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-semibold leading-6 tracking-[-0.32px] text-white/70">
+                AInbox
+              </span>
+              <svg
+                width="8"
+                height="14"
+                viewBox="0 0 8 14"
+                fill="none"
+                className="text-white/50"
+              >
+                <path
+                  d="M1 1L7 7L1 13"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <p className="text-sm font-normal leading-5 tracking-[-0.15px] text-white/40">
+              Enterprise Messaging
+            </p>
+          </div>
+          {/* Progress dots */}
+          <div className="inline-flex h-[36px] items-center gap-2 self-start rounded-full border border-white/10 bg-white/10 px-2.5 backdrop-blur-[50px]">
+            <button className="flex items-center justify-center">
+              <svg width="8" height="12" viewBox="0 0 8 12" fill="none">
+                <path d="M7 1.5L2 6L7 10.5" stroke="white" strokeOpacity="0.6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <div className="flex items-center gap-2">
+              {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+                <div
+                  key={i}
+                  className={`size-[7px] rounded-full ${i === 1 ? "bg-white" : "bg-white/25"}`}
+                />
+              ))}
+            </div>
+            <button className="flex items-center justify-center">
+              <svg width="8" height="12" viewBox="0 0 8 12" fill="none">
+                <path d="M1 1.5L6 6L1 10.5" stroke="white" strokeOpacity="0.6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
