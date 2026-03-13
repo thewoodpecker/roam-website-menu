@@ -70,6 +70,11 @@ const companyMenu: MenuColumn[] = [
       { title: "Roam Makes Remote Work", description: "", href: "/about-us" },
       { title: "Our Team", description: "", href: "/about-us#team" },
       { title: "Careers", description: "", href: "/careers" },
+    ],
+  },
+  {
+    heading: "Legal & Support",
+    items: [
       { title: "Support", description: "", href: "/support" },
       { title: "Terms of Use", description: "", href: "/terms" },
       { title: "Privacy Policy", description: "", href: "/privacy" },
@@ -110,58 +115,33 @@ function MegaMenu({ columns }: { columns: MenuColumn[] }) {
 
   if (isSingleColumn) {
     const items = columns[0].items;
+    // Split items into 3 columns
+    const colSize = Math.ceil(items.length / 3);
+    const col1 = items.slice(0, colSize);
+    const col2 = items.slice(colSize, colSize * 2);
+    const col3 = items.slice(colSize * 2);
+
     return (
-      <div className="flex gap-20 px-10 py-8">
-        <div>
-          <h3 className="mb-4 text-xs text-white/40">
-            {columns[0].heading}
-          </h3>
-          <ul className="flex flex-col gap-2">
-            {items.map((item) => (
-              <li key={item.title}>
-                <a
-                  href={item.href}
-                  className="group/link block"
-                >
-                  <span className="inline-flex items-center gap-1 text-2xl font-semibold tracking-[-0.5px] text-white/90 transition-colors group-hover/link:text-white">
-                    {item.title}
-                    <svg className="inline-block w-3 h-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </span>
-                  {item.description && (
-                    <span className="block text-sm text-white/30 mt-0.5">{item.description}</span>
-                  )}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 className="mb-4 text-xs text-white/40">
-            Use Cases
-          </h3>
-          <ul className="flex flex-col gap-2">
-            {["Remote Teams", "Hybrid Work", "All-Hands", "Onboarding", "Collaboration"].map((link) => (
-              <li key={link}>
-                <a href="#" className="text-sm font-normal text-white/60 transition-colors hover:text-white">
-                  {link}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 className="mb-4 text-xs text-white/40">
-            Resources
-          </h3>
-          <ul className="flex flex-col gap-2">
-            {["What's New", "Product Updates", "Integrations", "Compare Plans", "Watch Demo"].map((link) => (
-              <li key={link}>
-                <a href="#" className="text-sm font-normal text-white/60 transition-colors hover:text-white">
-                  {link}
-                </a>
-              </li>
-            ))}
-          </ul>
+      <div className="px-10 py-8">
+        <h3 className="mb-6 text-xs font-bold uppercase tracking-[0.5px] text-white/40" style={{ fontFamily: "'Possibility', sans-serif" }}>
+          {columns[0].heading}
+        </h3>
+        <div className="grid grid-cols-3 gap-x-16 gap-y-5">
+          {items.map((item) => (
+            <a
+              key={item.title}
+              href={item.href}
+              className="group/link block"
+            >
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-white transition-colors group-hover/link:text-white/70">
+                {item.title}
+                <svg className="inline-block w-2.5 h-2.5 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
+              {item.description && (
+                <span className="block text-sm text-white/40 mt-0.5">{item.description}</span>
+              )}
+            </a>
+          ))}
         </div>
       </div>
     );
