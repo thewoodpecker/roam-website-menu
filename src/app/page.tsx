@@ -144,6 +144,8 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Spacer for scrolling on mobile */}
+      <div className="h-screen bg-black lg:hidden" />
 
     </div>
   );
