@@ -126,7 +126,7 @@ export default function SiriGlowBadge({ children }: { children: React.ReactNode 
         ref={canvasRef}
         className="pointer-events-none absolute inset-0"
       />
-      <div className="relative flex items-center justify-center px-2.5 py-1 lg:px-3 lg:py-1.5 leading-none">
+      <div className="relative flex items-center justify-center px-3.5 py-1.5 lg:px-4 lg:py-2 leading-none">
         {children}
       </div>
     </div>
