@@ -585,8 +585,32 @@ export default function Navbar() {
             }}
           >
             <div className="flex flex-col justify-between h-full px-6 py-3 pb-[env(safe-area-inset-bottom,24px)]">
-              <div className="flex flex-col">
-                {navItems.map((item) =>
+              <div className="flex flex-col overflow-y-auto">
+                {/* Products inline */}
+                <h3
+                  className="pt-2 pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-white/35"
+                  style={{ fontFamily: "var(--font-possibility), sans-serif" }}
+                >
+                  Virtual Office Platform
+                </h3>
+                {productsMenu[0].items.map((item) => (
+                  <a
+                    key={item.title}
+                    href={item.href}
+                    onClick={toggleMobileMenu}
+                    className="py-2 active:opacity-70"
+                  >
+                    <span className="block text-[15px] font-medium text-white">{item.title}</span>
+                    {item.description && (
+                      <span className="block text-[12px] text-white/40 mt-0.5">{item.description}</span>
+                    )}
+                  </a>
+                ))}
+
+                <div className="my-2 h-px bg-white/10" />
+
+                {/* Remaining nav items (skip Products) */}
+                {navItems.filter(item => item.label !== "Products").map((item) =>
                   item.menu ? (
                     <button
                       key={item.label}
@@ -623,12 +647,15 @@ export default function Navbar() {
                 </button>
               </div>
 
-              <a
-                href="/demo"
-                className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
-              >
-                Book Demo
-              </a>
+              <div className="flex flex-col pt-3">
+                <div className="mb-3 h-px bg-white/10" />
+                <a
+                  href="/demo"
+                  className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
+                >
+                  Book Demo
+                </a>
+              </div>
             </div>
           </div>
 
