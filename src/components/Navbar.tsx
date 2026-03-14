@@ -614,7 +614,7 @@ export default function Navbar() {
 
               <a
                 href="/demo"
-                className="flex items-center justify-center rounded-xl bg-white py-3.5 text-[15px] font-semibold text-[#1a1a1a] active:bg-white/90"
+                className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
               >
                 Book Demo
               </a>
