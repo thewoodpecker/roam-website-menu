@@ -19,6 +19,10 @@ const possibility = localFont({
 export const metadata: Metadata = {
   title: "Roam - AI-Powered Virtual Office Platform",
   description: "Virtual Office, Drop-In Meetings, AI Notetaker, AI Assistant, Screen Recorder, AI Agents.",
+  other: {
+    "theme-color": "#000000",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+  },
 };
 
 export default function RootLayout({
@@ -27,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${inter.className} ${possibility.variable} antialiased`}>
+    <html lang="en" className="bg-black">
+      <body className={`${inter.variable} ${inter.className} ${possibility.variable} antialiased bg-black`}>
         {children}
       </body>
     </html>
