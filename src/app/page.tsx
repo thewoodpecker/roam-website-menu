@@ -32,8 +32,8 @@ export default function Home() {
             <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-0">
               <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-1">
                 {/* Badge */}
-                <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-3 py-1.5 backdrop-blur-[50px]">
-                  <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-base lg:text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
+                <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-2.5 py-1 lg:px-3 lg:py-1.5 backdrop-blur-[50px]">
+                  <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-xs lg:text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
                     style={{ fontFamily: "var(--font-possibility), sans-serif" }}
                   >
                     VIRTUAL OFFICE PLATFORM
