@@ -432,7 +432,10 @@ export default function Navbar() {
       </div>
 
       {/* ===== Mobile Header ===== */}
-      <div className="flex lg:hidden h-[56px] items-center justify-between px-4">
+      <div
+        className="relative z-10 flex lg:hidden h-[56px] items-center justify-between px-4 transition-colors duration-300"
+        style={{ background: mobileMenuOpen ? "#131415" : "transparent" }}
+      >
         {/* Logo */}
         <Image
           src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/roam-logo.png`}
@@ -543,7 +546,7 @@ export default function Navbar() {
 
       {/* ===== Mobile Menu Overlay ===== */}
       <div
-        className="fixed inset-x-0 top-[56px] bottom-0 z-40 lg:hidden"
+        className="fixed inset-x-0 top-[56px] bottom-0 z-[5] overflow-hidden lg:hidden"
         style={{ pointerEvents: mobileMenuOpen ? "auto" : "none" }}
       >
         {/* Backdrop */}
