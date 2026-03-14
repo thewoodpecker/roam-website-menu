@@ -110,7 +110,7 @@ const allMenuItems: NavItem[] = [
   { label: "Existing Members", href: "#", menu: existingMembersMenu },
 ];
 
-function MegaMenu({ columns }: { columns: MenuColumn[] }) {
+function MegaMenu({ columns, align = "left" }: { columns: MenuColumn[]; align?: "left" | "right" }) {
   const isSingleColumn = columns.length === 1;
 
   if (isSingleColumn) {
@@ -119,7 +119,7 @@ function MegaMenu({ columns }: { columns: MenuColumn[] }) {
     // Small lists: single vertical column (like Existing Members)
     if (items.length <= 4) {
       return (
-        <div className="flex gap-20 px-10 py-8">
+        <div className={`flex gap-20 px-10 py-8 ${align === "right" ? "justify-end" : ""}`}>
           <div>
             <h3 className="mb-4 text-xs text-white/40">
               {columns[0].heading}
@@ -537,7 +537,7 @@ export default function Navbar() {
                     pointerEvents: isActive ? "auto" : "none",
                   }}
                 >
-                  <MegaMenu columns={navItem.menu!} />
+                  <MegaMenu columns={navItem.menu!} align={navItem.label === "Existing Members" ? "right" : "left"} />
                 </div>
               );
             })}
