@@ -602,56 +602,60 @@ export default function Navbar() {
                 >
                   Virtual Office Platform
                 </h3>
-                {productsMenu[0].items.map((item) => (
-                  <a
-                    key={item.title}
-                    href={item.href}
-                    onClick={toggleMobileMenu}
-                    className="py-3 active:opacity-70"
-                  >
-                    <span className="block text-[15px] font-medium text-white">{item.title}</span>
-                    {item.description && (
-                      <span className="block text-[12px] text-white/40 mt-0.5">{item.description}</span>
-                    )}
-                  </a>
-                ))}
-
-                <div className="my-2 -mx-6 h-px bg-white/10" />
-
-                {/* Remaining nav items (skip Products) */}
-                {navItems.filter(item => item.label !== "Products").map((item) =>
-                  item.menu ? (
-                    <button
-                      key={item.label}
-                      onClick={() => openMobilePanel(item.label)}
-                      className="flex w-full items-center justify-between py-3.5 text-[17px] font-semibold text-white active:opacity-70"
-                    >
-                      {item.label}
-                      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="shrink-0 ml-4 text-white/30">
-                        <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </button>
-                  ) : (
+                <div className="flex flex-col gap-[16px]">
+                  {productsMenu[0].items.map((item) => (
                     <a
-                      key={item.label}
+                      key={item.title}
                       href={item.href}
                       onClick={toggleMobileMenu}
-                      className="py-3.5 text-[17px] font-semibold text-white active:opacity-70"
+                      className="active:opacity-70"
                     >
-                      {item.label}
+                      <span className="block text-[15px] font-medium text-white">{item.title}</span>
+                      {item.description && (
+                        <span className="block text-[12px] text-white/40 mt-0.5">{item.description}</span>
+                      )}
                     </a>
-                  )
-                )}
+                  ))}
+                </div>
 
-                <button
-                  onClick={() => openMobilePanel("Existing Members")}
-                  className="flex w-full items-center justify-between py-3.5 text-[17px] font-semibold text-white/60 active:opacity-70"
-                >
-                  Existing Members
-                  <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="shrink-0 ml-4 text-white/30">
-                    <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>
+                <div className="my-[24px] -mx-6 h-px bg-white/10" />
+
+                {/* Nav items + Existing Members */}
+                <div className="flex flex-col gap-[16px]">
+                  {navItems.filter(item => item.label !== "Products").map((item) =>
+                    item.menu ? (
+                      <button
+                        key={item.label}
+                        onClick={() => openMobilePanel(item.label)}
+                        className="flex w-full items-center justify-between text-[17px] font-semibold text-white active:opacity-70"
+                      >
+                        {item.label}
+                        <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="shrink-0 ml-4 text-white/30">
+                          <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        onClick={toggleMobileMenu}
+                        className="text-[17px] font-semibold text-white active:opacity-70"
+                      >
+                        {item.label}
+                      </a>
+                    )
+                  )}
+
+                  <button
+                    onClick={() => openMobilePanel("Existing Members")}
+                    className="flex w-full items-center justify-between text-[17px] font-semibold text-white/60 active:opacity-70"
+                  >
+                    Existing Members
+                    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="shrink-0 ml-4 text-white/30">
+                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
 
               </div>
 
