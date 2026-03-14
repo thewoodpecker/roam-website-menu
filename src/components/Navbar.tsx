@@ -607,7 +607,7 @@ export default function Navbar() {
                   </a>
                 ))}
 
-                <div className="my-2 h-px bg-white/10" />
+                <div className="my-2 -mx-6 h-px bg-white/10" />
 
                 {/* Remaining nav items (skip Products) */}
                 {navItems.filter(item => item.label !== "Products").map((item) =>
