@@ -31,6 +31,14 @@ export default function Home() {
           <div className="flex flex-col items-start lg:items-center gap-4 max-w-full">
             <div className="flex flex-col items-start lg:items-center">
               <div className="flex flex-col items-start lg:items-center gap-1">
+                {/* Badge */}
+                <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-3 py-1.5 backdrop-blur-[50px]">
+                  <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-[10px] lg:text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
+                    style={{ fontFamily: "'Possibility', sans-serif" }}
+                  >
+                    VIRTUAL OFFICE PLATFORM
+                  </span>
+                </div>
                 {/* Heading */}
                 <h1
                   className="text-left lg:text-center text-[22px] lg:text-[40px] font-bold uppercase leading-[28px] lg:leading-[50px] tracking-[-1px] text-white whitespace-nowrap"
@@ -49,7 +57,7 @@ export default function Home() {
 
             {/* CTA Button — mobile only */}
             <div className="lg:hidden">
-              <div className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
+              <div className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
                 <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
                   Book Demo
                 </span>
