@@ -433,8 +433,13 @@ export default function Navbar() {
 
       {/* ===== Mobile Header ===== */}
       <div
-        className="relative z-10 flex lg:hidden h-[56px] items-center justify-between px-4 transition-colors duration-300"
-        style={{ background: mobileMenuOpen ? "#000000" : "transparent" }}
+        className="relative z-10 flex lg:hidden h-[56px] items-center justify-between px-4"
+        style={{
+          background: mobileMenuOpen ? "#000000" : "transparent",
+          transition: mobileMenuOpen
+            ? "background-color 400ms cubic-bezier(0.33,1,0.68,1)"
+            : "background-color 300ms cubic-bezier(0.32,0,0.67,0)",
+        }}
       >
         {/* Logo */}
         <Image
@@ -547,23 +552,29 @@ export default function Navbar() {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 transition-opacity duration-300 ease-out"
+          className="absolute inset-0"
           style={{
             opacity: mobileMenuOpen ? 1 : 0,
             background: "rgba(0, 0, 0, 0.5)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
+            transition: mobileMenuOpen
+              ? "opacity 400ms cubic-bezier(0.33, 1, 0.68, 1)"
+              : "opacity 300ms cubic-bezier(0.32, 0, 0.67, 0)",
           }}
           onClick={toggleMobileMenu}
         />
 
         {/* Menu panel — slides down from top */}
         <div
-          className="relative h-full overflow-hidden transition-all duration-300 ease-out"
+          className="relative h-full overflow-hidden"
           style={{
             background: "#000000",
             transform: mobileMenuOpen ? "translateY(0)" : "translateY(-110%)",
             opacity: mobileMenuOpen ? 1 : 0,
+            transition: mobileMenuOpen
+              ? "transform 400ms cubic-bezier(0.33, 1, 0.68, 1), opacity 400ms cubic-bezier(0.33, 1, 0.68, 1)"
+              : "transform 300ms cubic-bezier(0.32, 0, 0.67, 0), opacity 300ms cubic-bezier(0.32, 0, 0.67, 0)",
           }}
         >
           {/* Root panel */}
