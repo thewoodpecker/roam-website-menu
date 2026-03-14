@@ -5,7 +5,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#0c0c0e]">
+    <div className="flex min-h-screen flex-col bg-black lg:bg-[#0c0c0e]">
       {/* Hero Section */}
       <section className="relative flex h-screen w-full flex-col items-start justify-end border-b border-white/10">
         {/* Background image */}
@@ -189,7 +189,7 @@ export default function Home() {
       </div>
 
       {/* Fixed bottom Book Demo bar — mobile only */}
-      <div className="fixed inset-x-0 bottom-0 z-50 lg:hidden border-t border-white/10 bg-[#0c0c0e] px-5 py-3 pb-[env(safe-area-inset-bottom,12px)]">
+      <div className="fixed inset-x-0 bottom-0 z-50 lg:hidden border-t border-white/10 bg-black lg:bg-[#0c0c0e] px-5 py-3 pb-[env(safe-area-inset-bottom,12px)]">
         <div className="flex w-full items-center justify-center rounded-2xl bg-white px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
           <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
             Book Demo

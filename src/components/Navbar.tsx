@@ -434,7 +434,7 @@ export default function Navbar() {
       {/* ===== Mobile Header ===== */}
       <div
         className="relative z-10 flex lg:hidden h-[56px] items-center justify-between px-4 transition-colors duration-300"
-        style={{ background: mobileMenuOpen ? "#131415" : "transparent" }}
+        style={{ background: mobileMenuOpen ? "#000000" : "transparent" }}
       >
         {/* Logo */}
         <Image
@@ -483,7 +483,7 @@ export default function Navbar() {
             style={{
               opacity: isAnimating ? 1 : 0,
               height: isAnimating && menuHeight ? 56 + 1 + menuHeight : 56,
-              background: "#131415",
+              background: "#000000",
               transformOrigin: "top",
             }}
           />
@@ -561,7 +561,7 @@ export default function Navbar() {
         <div
           className="relative h-full overflow-hidden transition-all duration-300 ease-out"
           style={{
-            background: "#131415",
+            background: "#000000",
             transform: mobileMenuOpen ? "translateY(0)" : "translateY(-110%)",
             opacity: mobileMenuOpen ? 1 : 0,
           }}
