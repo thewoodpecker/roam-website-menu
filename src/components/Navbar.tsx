@@ -615,7 +615,7 @@ export default function Navbar() {
               <a
                 href="/demo"
                 className="flex items-center justify-center rounded-2xl px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-black active:opacity-90"
-                style={{ background: "linear-gradient(135deg, #f5d090 0%, #e8b960 25%, #daa545 50%, #e8b960 75%, #f0c878 100%)" }}
+                style={{ background: "linear-gradient(180deg, #F7CF8C 0%, #C7864B 100%)" }}
               >
                 Book Demo
               </a>
