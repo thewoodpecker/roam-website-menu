@@ -204,6 +204,7 @@ function MegaMenu({ columns }: { columns: MenuColumn[] }) {
 }
 
 export default function Navbar() {
+  // Desktop state
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [displayedMenu, setDisplayedMenu] = useState<string | null>(null);
@@ -214,9 +215,13 @@ export default function Navbar() {
   const prevMenuRef = useRef<string | null>(null);
   const [slideDirection, setSlideDirection] = useState<"left" | "right" | "none">("none");
 
+  // Mobile state
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileActivePanel, setMobileActivePanel] = useState<string | null>(null);
+
+  // Desktop menu logic
   const closeMenu = useCallback(() => {
     setIsAnimating(false);
-    // Wait for the exit animation to finish before removing from DOM
     setTimeout(() => {
       setDisplayedMenu(null);
     }, 250);
@@ -224,7 +229,6 @@ export default function Navbar() {
 
   useEffect(() => {
     if (activeMenu) {
-      // Determine slide direction based on nav item order
       const menuLabels = allMenuItems.filter(n => n.menu).map(n => n.label);
       const prevIndex = prevMenuRef.current ? menuLabels.indexOf(prevMenuRef.current) : -1;
       const nextIndex = menuLabels.indexOf(activeMenu);
@@ -237,7 +241,6 @@ export default function Navbar() {
 
       prevMenuRef.current = activeMenu;
       setDisplayedMenu(activeMenu);
-      // Trigger enter animation on next frame
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           setIsAnimating(true);
@@ -271,6 +274,30 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Mobile: lock body scroll when menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Mobile: close on resize to desktop
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 1024) {
+        setMobileMenuOpen(false);
+        setMobileActivePanel(null);
+      }
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const menuIsOpen = displayedMenu !== null;
 
   function handleMouseEnter(label: string, hasMenu: boolean) {
@@ -278,7 +305,7 @@ export default function Navbar() {
     if (hasMenu) {
       setActiveMenu(label);
     } else if (menuIsOpen) {
-      // Keep menu open but don't switch — just keep current
+      // Keep menu open but don't switch
     } else {
       setActiveMenu(null);
     }
@@ -294,6 +321,24 @@ export default function Navbar() {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
   }
 
+  // Mobile handlers
+  function toggleMobileMenu() {
+    if (mobileMenuOpen) {
+      setMobileMenuOpen(false);
+      setTimeout(() => setMobileActivePanel(null), 300);
+    } else {
+      setMobileMenuOpen(true);
+    }
+  }
+
+  function openMobilePanel(label: string) {
+    setMobileActivePanel(label);
+  }
+
+  function closeMobilePanel() {
+    setMobileActivePanel(null);
+  }
+
   const activeItem = allMenuItems.find((item) => item.label === displayedMenu);
 
   return (
@@ -302,7 +347,8 @@ export default function Navbar() {
       className="absolute top-0 left-0 right-0 z-50"
       onMouseLeave={handleMouseLeave}
     >
-      <div className="grid h-[56px] grid-cols-[1fr_auto_1fr] items-stretch pr-1">
+      {/* ===== Desktop Header ===== */}
+      <div className="hidden lg:grid h-[56px] grid-cols-[1fr_auto_1fr] items-stretch pr-1">
         {/* Left nav links */}
         <div className="flex items-stretch overflow-hidden">
           {navItems.map((item) => (
@@ -385,10 +431,53 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* ===== Mobile Header ===== */}
+      <div className="flex lg:hidden h-[56px] items-center justify-between px-4">
+        {/* Logo */}
+        <Image
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/roam-logo.png`}
+          alt="Roam"
+          width={90}
+          height={26}
+          className="object-contain"
+          priority
+        />
 
-      {/* Mega menu backdrop + dropdown with Stripe-style animation */}
+        {/* Hamburger / Close button */}
+        <button
+          onClick={toggleMobileMenu}
+          className="relative flex items-center justify-center w-10 h-10"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileMenuOpen}
+        >
+          <div className="relative w-5 h-[14px]">
+            <span
+              className="absolute left-0 right-0 h-[1.5px] rounded-full bg-white transition-all duration-300 ease-out"
+              style={
+                mobileMenuOpen
+                  ? { top: "6px", transform: "rotate(45deg)" }
+                  : { top: 0, transform: "rotate(0deg)" }
+              }
+            />
+            <span
+              className="absolute left-0 right-0 top-[6px] h-[1.5px] rounded-full bg-white transition-all duration-300 ease-out"
+              style={{ opacity: mobileMenuOpen ? 0 : 1, transform: mobileMenuOpen ? "scaleX(0)" : "scaleX(1)" }}
+            />
+            <span
+              className="absolute left-0 right-0 h-[1.5px] rounded-full bg-white transition-all duration-300 ease-out"
+              style={
+                mobileMenuOpen
+                  ? { top: "6px", transform: "rotate(-45deg)" }
+                  : { top: "12px", transform: "rotate(0deg)" }
+              }
+            />
+          </div>
+        </button>
+      </div>
+
+      {/* ===== Desktop Mega Menu ===== */}
       {displayedMenu && activeItem?.menu && (
-        <>
+        <div className="hidden lg:block">
           {/* Solid black background behind nav + menu */}
           <div
             className="pointer-events-none absolute inset-x-0 top-0 z-[-1] transition-all duration-300 ease-out"
@@ -428,10 +517,8 @@ export default function Navbar() {
 
               let translateX = "0px";
               if (!isActive && slideDirection !== "none") {
-                // Inactive panels slide out in the opposite direction
                 translateX = myIndex < activeIndex ? "-40px" : "40px";
               } else if (isActive && slideDirection !== "none") {
-                // Active panel is already at 0 (arrived)
                 translateX = "0px";
               }
 
@@ -451,8 +538,172 @@ export default function Navbar() {
               );
             })}
           </div>
-        </>
+        </div>
       )}
+
+      {/* ===== Mobile Menu Overlay ===== */}
+      <div
+        className="fixed inset-x-0 top-[56px] bottom-0 z-40 lg:hidden"
+        style={{ pointerEvents: mobileMenuOpen ? "auto" : "none" }}
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 transition-opacity duration-300 ease-out"
+          style={{
+            opacity: mobileMenuOpen ? 1 : 0,
+            background: "rgba(0, 0, 0, 0.5)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+          }}
+          onClick={toggleMobileMenu}
+        />
+
+        {/* Menu panel — slides down from top */}
+        <div
+          className="relative h-full overflow-hidden transition-all duration-300 ease-out"
+          style={{
+            background: "#131415",
+            transform: mobileMenuOpen ? "translateY(0)" : "translateY(-110%)",
+            opacity: mobileMenuOpen ? 1 : 0,
+          }}
+        >
+          {/* Root panel */}
+          <div
+            className="absolute inset-0 overflow-y-auto transition-transform duration-300 ease-out"
+            style={{
+              transform: mobileActivePanel ? "translateX(-100%)" : "translateX(0)",
+            }}
+          >
+            <div className="flex flex-col px-6 py-3 pb-[env(safe-area-inset-bottom,24px)]">
+              {navItems.map((item) =>
+                item.menu ? (
+                  <button
+                    key={item.label}
+                    onClick={() => openMobilePanel(item.label)}
+                    className="flex items-center justify-between py-3.5 text-[17px] font-semibold text-white active:opacity-70"
+                  >
+                    {item.label}
+                    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/30">
+                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={toggleMobileMenu}
+                    className="py-3.5 text-[17px] font-semibold text-white active:opacity-70"
+                  >
+                    {item.label}
+                  </a>
+                )
+              )}
+
+              <div className="my-2 h-px bg-white/10" />
+
+              <button
+                onClick={() => openMobilePanel("Existing Members")}
+                className="flex items-center justify-between py-3.5 text-[17px] font-semibold text-white/60 active:opacity-70"
+              >
+                Existing Members
+                <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/30">
+                  <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+
+              <div className="my-2 h-px bg-white/10" />
+
+              <div className="flex flex-col gap-3 pt-3">
+                <a
+                  href="/demo"
+                  className="flex items-center justify-center rounded-xl bg-white py-3.5 text-[15px] font-semibold text-[#1a1a1a] active:bg-white/90"
+                >
+                  Book Demo
+                </a>
+                <a
+                  href="/trial"
+                  className="flex items-center justify-center rounded-xl bg-white/10 py-3.5 text-[15px] font-semibold text-white active:bg-white/15"
+                >
+                  Free Trial
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Sub-panels */}
+          {allMenuItems
+            .filter((n) => n.menu)
+            .map((navItem) => (
+              <div
+                key={navItem.label}
+                className="absolute inset-0 overflow-y-auto transition-transform duration-300 ease-out"
+                style={{
+                  transform:
+                    mobileActivePanel === navItem.label
+                      ? "translateX(0)"
+                      : "translateX(100%)",
+                }}
+              >
+                <div className="flex flex-col px-6 py-3 pb-[env(safe-area-inset-bottom,24px)]">
+                  {/* Back button */}
+                  <button
+                    onClick={closeMobilePanel}
+                    className="flex items-center gap-2 py-3 text-[15px] font-medium text-white/50 active:opacity-70"
+                  >
+                    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/40">
+                      <path d="M6 1L1 6L6 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    Back
+                  </button>
+
+                  {/* Section title */}
+                  <div className="py-2 text-[20px] font-bold text-white">
+                    {navItem.label}
+                  </div>
+
+                  <div className="mt-1 h-px bg-white/10" />
+
+                  {/* Menu columns stacked vertically */}
+                  {navItem.menu!.map((column, colIndex) => (
+                    <div key={column.heading} className="py-3">
+                      {/* Only show heading if multiple columns or if it differs from the nav item label */}
+                      {(navItem.menu!.length > 1 || column.heading !== navItem.label) && (
+                        <h3
+                          className="pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-white/35"
+                          style={{ fontFamily: "'Possibility', sans-serif" }}
+                        >
+                          {column.heading}
+                        </h3>
+                      )}
+                      <div className="flex flex-col">
+                        {column.items.map((item) => (
+                          <a
+                            key={item.title}
+                            href={item.href}
+                            onClick={toggleMobileMenu}
+                            className="py-2.5 active:opacity-70"
+                          >
+                            <span className="block text-[15px] font-medium text-white">
+                              {item.title}
+                            </span>
+                            {item.description && (
+                              <span className="block text-[12px] text-white/40 mt-0.5">
+                                {item.description}
+                              </span>
+                            )}
+                          </a>
+                        ))}
+                      </div>
+                      {colIndex < navItem.menu!.length - 1 && (
+                        <div className="mt-3 h-px bg-white/10" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
     </nav>
   );
 }
