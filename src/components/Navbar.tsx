@@ -658,13 +658,6 @@ export default function Navbar() {
                     Back
                   </button>
 
-                  {/* Section title */}
-                  <div className="py-2 text-[20px] font-bold text-white">
-                    {navItem.label}
-                  </div>
-
-                  <div className="mt-1 h-px bg-white/10" />
-
                   {/* Menu columns stacked vertically */}
                   {navItem.menu!.map((column, colIndex) => (
                     <div key={column.heading} className="py-3">
