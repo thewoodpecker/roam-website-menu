@@ -32,7 +32,7 @@ export default function Home() {
         <div className="absolute inset-x-0 bottom-0 z-[5] h-[45%] bg-gradient-to-b from-transparent to-black pointer-events-none lg:hidden" />
 
         {/* Hero Content */}
-        <div className="relative z-10 flex w-full flex-col items-start lg:items-center justify-end pb-10 px-5 lg:px-10">
+        <div className="relative z-10 flex w-full flex-col items-start lg:items-center justify-end pb-16 lg:pb-10 px-5 lg:px-10">
           <div className="flex flex-col items-start lg:items-center gap-6 lg:gap-4 max-w-full">
             <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-0">
               <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-1">
