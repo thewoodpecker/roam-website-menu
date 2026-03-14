@@ -18,8 +18,8 @@ export default function Home() {
             className="object-cover object-left lg:object-center"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[37.66%] to-[rgba(0,0,0,0.6)] to-[83.75%]" />
-          <div className="absolute inset-x-0 bottom-0 h-[10%] bg-black lg:hidden" />
+          <div className="absolute inset-0 hidden lg:block bg-gradient-to-b from-transparent from-[37.66%] to-[rgba(0,0,0,0.6)] to-[83.75%]" />
+          <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-transparent from-[37.66%] to-black to-[83.75%]" />
         </div>
 
         {/* Navbar */}
