@@ -584,8 +584,8 @@ export default function Navbar() {
               transform: mobileActivePanel ? "translateX(-100%)" : "translateX(0)",
             }}
           >
-            <div className="flex flex-col justify-between h-full px-6 py-3 pb-[env(safe-area-inset-bottom,24px)]">
-              <div className="flex flex-col overflow-y-auto">
+            <div className="flex flex-col justify-between h-full py-3 pb-[env(safe-area-inset-bottom,24px)]">
+              <div className="flex flex-col overflow-y-auto px-6">
                 {/* Products inline */}
                 <h3
                   className="pt-2 pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-white/35"
@@ -647,14 +647,16 @@ export default function Navbar() {
                 </button>
               </div>
 
-              <div className="flex flex-col pt-3">
-                <div className="mb-3 h-px bg-white/10" />
-                <a
-                  href="/demo"
-                  className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
-                >
-                  Book Demo
-                </a>
+              <div className="flex flex-col shrink-0">
+                <div className="h-px bg-white/10" />
+                <div className="px-6 pt-3">
+                  <a
+                    href="/demo"
+                    className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
+                  >
+                    Book Demo
+                  </a>
+                </div>
               </div>
             </div>
           </div>
