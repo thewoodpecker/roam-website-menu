@@ -588,7 +588,7 @@ export default function Navbar() {
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-32 bg-gradient-to-t from-black to-transparent" />
 
             {/* Pinned button at bottom */}
-            <div className="absolute inset-x-0 bottom-0 z-40 px-6 pb-[env(safe-area-inset-bottom,12px)] pt-3">
+            <div className="absolute inset-x-0 bottom-0 z-40 px-6 pb-[calc(env(safe-area-inset-bottom,12px)+16px)] pt-3">
               <a
                 href="/demo"
                 className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
