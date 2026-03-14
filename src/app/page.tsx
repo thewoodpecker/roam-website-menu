@@ -15,7 +15,7 @@ export default function Home() {
             src={`${basePath}/images/hero-bg.jpg`}
             alt=""
             fill
-            className="object-cover"
+            className="object-cover object-left lg:object-center"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[37.66%] to-[rgba(0,0,0,0.6)] to-[83.75%]" />
