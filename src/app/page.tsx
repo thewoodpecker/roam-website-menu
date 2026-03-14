@@ -44,28 +44,11 @@ export default function Home() {
               </p>
             </div>
 
-            {/* CTA Buttons — stacked on mobile, side-by-side on desktop */}
-            <div className="flex w-full flex-col gap-3 lg:hidden">
-              <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
-                <div className="relative size-6 overflow-hidden rounded-full">
-                  <Image
-                    src={`${basePath}/images/avatar.png`}
-                    alt=""
-                    width={24}
-                    height={24}
-                    className="rounded-full object-cover"
-                  />
-                </div>
+            {/* CTA Button — mobile only */}
+            <div className="lg:hidden">
+              <div className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
                 <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
-                  Demo
-                </span>
-                <svg width="12" height="7" viewBox="0 0 12 7" fill="none" className="text-[#1a1a1a]">
-                  <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <div className="flex items-center justify-center rounded-2xl bg-white/10 px-4 py-3.5 backdrop-blur-[30px]">
-                <span className="text-base font-medium leading-6 tracking-[-0.32px] text-white">
-                  Free Trial
+                  Book Demo
                 </span>
               </div>
             </div>
