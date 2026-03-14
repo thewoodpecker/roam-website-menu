@@ -21,9 +21,9 @@ body {
 
 
 @keyframes silver-swipe {
-  0% { background-position: 200% 0; }
-  40% { background-position: -200% 0; }
-  100% { background-position: -200% 0; }
+  0% { background-position: 100% 0; }
+  40% { background-position: 0% 0; }
+  100% { background-position: 0% 0; }
 }
 
 .animate-silver-swipe {

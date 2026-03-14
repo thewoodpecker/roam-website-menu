@@ -37,10 +37,10 @@ export default function Home() {
               <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-1">
                 {/* Badge */}
                 <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-2.5 py-1 lg:px-3 lg:py-1.5 backdrop-blur-[50px]">
-                  <span className="animate-silver-swipe bg-[length:200%_100%] bg-no-repeat bg-clip-text text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
+                  <span className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
                     style={{
                       fontFamily: "var(--font-possibility), sans-serif",
-                      backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 35%, #e0e0e0 50%, rgba(255,255,255,0.3) 65%, rgba(255,255,255,0.3) 100%)",
+                      backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 46%, #e0e0e0 50%, rgba(255,255,255,0.3) 54%, rgba(255,255,255,0.3) 100%)",
                     }}
                   >
                     VIRTUAL OFFICE PLATFORM
