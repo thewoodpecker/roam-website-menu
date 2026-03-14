@@ -584,14 +584,24 @@ export default function Navbar() {
               transform: mobileActivePanel ? "translateX(-100%)" : "translateX(0)",
             }}
           >
-            <div className="relative flex flex-col h-full pt-[56px]">
-              {/* Top gradient fade — starts at top of screen, covers header area */}
+            <div className="relative h-full">
+              {/* Top gradient fade */}
               <div className="pointer-events-none absolute inset-x-0 top-[56px] z-30 h-16 bg-gradient-to-b from-black to-transparent" />
-              {/* Bottom gradient fade — from bottom of screen */}
+              {/* Bottom gradient fade */}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-32 bg-gradient-to-t from-black to-transparent" />
 
-              {/* Scrollable content */}
-              <div className="flex-1 overflow-y-auto px-6 pt-4 pb-6">
+              {/* Pinned button at bottom */}
+              <div className="absolute inset-x-0 bottom-0 z-40 px-6 pb-[env(safe-area-inset-bottom,12px)] pt-3">
+                <a
+                  href="/demo"
+                  className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
+                >
+                  Book Demo
+                </a>
+              </div>
+
+              {/* Scrollable content — full height, padded for nav and button */}
+              <div className="absolute inset-0 overflow-y-auto px-6 pt-[72px] pb-[calc(env(safe-area-inset-bottom,12px)+80px)]">
                 {/* Products inline */}
                 <h3
                   className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text pt-2 pb-[16px] text-[11px] font-bold uppercase tracking-[0.5px] text-transparent"
@@ -657,16 +667,6 @@ export default function Navbar() {
                   </button>
                 </div>
 
-              </div>
-
-              {/* Pinned button at bottom */}
-              <div className="shrink-0 relative z-40 px-6 pb-[env(safe-area-inset-bottom,12px)] pt-3">
-                <a
-                  href="/demo"
-                  className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
-                >
-                  Book Demo
-                </a>
               </div>
             </div>
           </div>
