@@ -6,7 +6,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-black lg:bg-[#0c0c0e]">
+    <div className="flex min-h-screen flex-col bg-black lg:bg-[#000000]">
       {/* Hero Section */}
       <section className="relative flex h-screen w-full flex-col items-start justify-end border-b-0 lg:border-b lg:border-white/10">
         {/* Background image */}
