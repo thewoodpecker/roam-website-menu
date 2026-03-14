@@ -689,7 +689,7 @@ export default function Navbar() {
                       : "translateX(100%)",
                 }}
               >
-                <div className="flex flex-col px-6 py-3 pb-[env(safe-area-inset-bottom,24px)]">
+                <div className="flex flex-col px-6 pt-[72px] pb-[env(safe-area-inset-bottom,24px)]">
                   {/* Back button */}
                   <button
                     onClick={closeMobilePanel}
