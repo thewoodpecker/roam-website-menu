@@ -120,7 +120,7 @@ function MegaMenu({ columns, align = "left" }: { columns: MenuColumn[]; align?: 
     if (items.length <= 4) {
       return (
         <div className={`flex gap-20 px-10 py-8 ${align === "right" ? "justify-end" : ""}`}>
-          <div>
+          <div className={align === "right" ? "text-right" : ""}>
             <h3 className="mb-4 text-xs text-white/40">
               {columns[0].heading}
             </h3>
