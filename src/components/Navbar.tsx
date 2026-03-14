@@ -453,25 +453,21 @@ export default function Navbar() {
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
         >
-          <div className="relative w-5 h-[14px]">
+          <div className="relative w-[16px] h-[7px]">
             <span
               className="absolute left-0 right-0 h-[1.5px] rounded-full bg-white transition-all duration-300 ease-out"
               style={
                 mobileMenuOpen
-                  ? { top: "6px", transform: "rotate(45deg)" }
+                  ? { top: "3px", transform: "rotate(45deg)" }
                   : { top: 0, transform: "rotate(0deg)" }
               }
             />
             <span
-              className="absolute left-0 right-0 top-[6px] h-[1.5px] rounded-full bg-white transition-all duration-300 ease-out"
-              style={{ opacity: mobileMenuOpen ? 0 : 1, transform: mobileMenuOpen ? "scaleX(0)" : "scaleX(1)" }}
-            />
-            <span
               className="absolute left-0 right-0 h-[1.5px] rounded-full bg-white transition-all duration-300 ease-out"
               style={
                 mobileMenuOpen
-                  ? { top: "6px", transform: "rotate(-45deg)" }
-                  : { top: "12px", transform: "rotate(0deg)" }
+                  ? { top: "3px", transform: "rotate(-45deg)" }
+                  : { top: "6px", transform: "rotate(0deg)" }
               }
             />
           </div>

@@ -24,13 +24,13 @@ export default function Home() {
         <Navbar />
 
         {/* Hero Content */}
-        <div className="relative z-10 flex w-full flex-col items-center justify-end pb-10 px-10">
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex flex-col items-center">
-              <div className="flex flex-col items-center gap-1">
+        <div className="relative z-10 flex w-full flex-col items-start lg:items-center justify-end pb-10 px-5 lg:px-10">
+          <div className="flex flex-col items-start lg:items-center gap-4 max-w-full">
+            <div className="flex flex-col items-start lg:items-center">
+              <div className="flex flex-col items-start lg:items-center gap-1">
                 {/* Badge */}
                 <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-3 py-1.5 backdrop-blur-[50px]">
-                  <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
+                  <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-[10px] lg:text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
                     style={{ fontFamily: "'Possibility', sans-serif" }}
                   >
                     AI-POWERED VIRTUAL OFFICE PLATFORM
@@ -38,23 +38,48 @@ export default function Home() {
                 </div>
                 {/* Heading */}
                 <h1
-                  className="text-center text-[40px] font-bold uppercase leading-[50px] tracking-[-1px] text-white"
+                  className="text-left lg:text-center text-[28px] lg:text-[40px] font-bold uppercase leading-[36px] lg:leading-[50px] tracking-[-1px] text-white"
                   style={{ fontFamily: "'Possibility', sans-serif" }}
                 >
                   Roam Makes Remote Work
                 </h1>
               </div>
               {/* Subtitle */}
-              <p className="text-center text-base font-normal leading-6 tracking-[-0.32px] text-white/50">
+              <p className="text-left lg:text-center text-sm lg:text-base font-normal leading-5 lg:leading-6 tracking-[-0.32px] text-white/50">
                 Virtual Office, Drop-In Meetings, AI Notetaker, AI Assistant, Screen Recorder, AI Agents.
-                <br />
-                Unleash Productivity, Culture &amp; AI.
+                <br className="hidden lg:block" />
+                {" "}Unleash Productivity, Culture &amp; AI.
               </p>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="relative flex h-[68px] w-[626px] items-center rounded-3xl border border-white/20 bg-white/10 backdrop-blur-[30px]">
-              {/* Demo Button */}
+            {/* CTA Buttons — stacked on mobile, side-by-side on desktop */}
+            <div className="flex w-full flex-col gap-3 lg:hidden">
+              <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
+                <div className="relative size-6 overflow-hidden rounded-full">
+                  <Image
+                    src={`${basePath}/images/avatar.png`}
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="rounded-full object-cover"
+                  />
+                </div>
+                <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
+                  Demo
+                </span>
+                <svg width="12" height="7" viewBox="0 0 12 7" fill="none" className="text-[#1a1a1a]">
+                  <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div className="flex items-center justify-center rounded-2xl bg-white/10 px-4 py-3.5 backdrop-blur-[30px]">
+                <span className="text-base font-medium leading-6 tracking-[-0.32px] text-white">
+                  Free Trial
+                </span>
+              </div>
+            </div>
+
+            {/* Desktop CTA */}
+            <div className="relative hidden lg:flex h-[68px] w-[626px] items-center rounded-3xl border border-white/20 bg-white/10 backdrop-blur-[30px]">
               <div className="absolute left-2 top-[7.5px] flex w-[300px] items-center justify-between rounded-2xl bg-white px-4 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
                 <div className="relative size-6 overflow-hidden rounded-full">
                   <Image
@@ -68,23 +93,10 @@ export default function Home() {
                 <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
                   Demo
                 </span>
-                <svg
-                  width="12"
-                  height="7"
-                  viewBox="0 0 12 7"
-                  fill="none"
-                  className="text-[#1a1a1a]"
-                >
-                  <path
-                    d="M1 1L6 6L11 1"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                <svg width="12" height="7" viewBox="0 0 12 7" fill="none" className="text-[#1a1a1a]">
+                  <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              {/* Free Trial Button */}
               <div className="absolute right-2 top-[7.5px] flex w-[300px] items-center justify-center rounded-2xl bg-white px-4 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_0px_rgba(0,0,0,0.08)]">
                 <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#414141]">
                   Free Trial
@@ -95,7 +107,7 @@ export default function Home() {
         </div>
 
         {/* Magicast sidebar - left overlay */}
-        <div className="absolute left-4 top-20 z-10 flex flex-col items-start gap-4">
+        <div className="absolute left-4 top-20 z-10 hidden lg:flex flex-col items-start gap-4">
           <div className="pl-1">
             <div className="flex items-center gap-2">
               <span className="text-lg font-semibold leading-6 tracking-[-0.32px] text-white/70">
