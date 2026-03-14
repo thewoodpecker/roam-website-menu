@@ -55,15 +55,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* CTA Button — mobile only */}
-            <div className="w-full lg:hidden">
-              <div className="flex w-full items-center justify-center rounded-2xl bg-white px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
-                <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
-                  Book Demo
-                </span>
-              </div>
-            </div>
-
             {/* Desktop CTA */}
             <div className="relative hidden lg:flex h-[68px] w-[626px] items-center rounded-3xl border border-white/20 bg-white/10 backdrop-blur-[30px]">
               <div className="absolute left-2 top-[7.5px] flex w-[300px] items-center justify-between rounded-2xl bg-white px-4 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
@@ -142,6 +133,69 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Skeleton sections — mobile only */}
+      <div className="flex flex-col gap-6 px-5 py-10 lg:hidden">
+        {/* Section 1 */}
+        <div className="flex flex-col gap-3">
+          <div className="h-3 w-24 rounded-full bg-white/5" />
+          <div className="h-5 w-48 rounded-full bg-white/8" />
+          <div className="h-3 w-full rounded-full bg-white/5" />
+          <div className="h-3 w-4/5 rounded-full bg-white/5" />
+        </div>
+
+        {/* Section 2 — cards */}
+        <div className="grid grid-cols-2 gap-3">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="flex flex-col gap-2 rounded-2xl bg-white/[0.03] border border-white/5 p-4">
+              <div className="h-20 w-full rounded-xl bg-white/5" />
+              <div className="h-3 w-3/4 rounded-full bg-white/8" />
+              <div className="h-3 w-1/2 rounded-full bg-white/5" />
+            </div>
+          ))}
+        </div>
+
+        {/* Section 3 */}
+        <div className="flex flex-col gap-3">
+          <div className="h-3 w-20 rounded-full bg-white/5" />
+          <div className="h-5 w-56 rounded-full bg-white/8" />
+          <div className="h-40 w-full rounded-2xl bg-white/[0.03] border border-white/5" />
+        </div>
+
+        {/* Section 4 — list */}
+        <div className="flex flex-col gap-3">
+          <div className="h-3 w-28 rounded-full bg-white/5" />
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="flex items-center gap-3 rounded-xl bg-white/[0.03] border border-white/5 p-4">
+              <div className="h-10 w-10 shrink-0 rounded-full bg-white/5" />
+              <div className="flex flex-col gap-1.5 flex-1">
+                <div className="h-3 w-3/4 rounded-full bg-white/8" />
+                <div className="h-3 w-1/2 rounded-full bg-white/5" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Section 5 */}
+        <div className="flex flex-col gap-3">
+          <div className="h-5 w-40 rounded-full bg-white/8" />
+          <div className="h-3 w-full rounded-full bg-white/5" />
+          <div className="h-3 w-5/6 rounded-full bg-white/5" />
+          <div className="h-3 w-2/3 rounded-full bg-white/5" />
+        </div>
+
+        {/* Bottom spacer for fixed button */}
+        <div className="h-16" />
+      </div>
+
+      {/* Fixed bottom Book Demo bar — mobile only */}
+      <div className="fixed inset-x-0 bottom-0 z-50 lg:hidden border-t border-white/10 bg-[#0c0c0e] px-5 py-3 pb-[env(safe-area-inset-bottom,12px)]">
+        <div className="flex w-full items-center justify-center rounded-2xl bg-white px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]">
+          <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
+            Book Demo
+          </span>
+        </div>
+      </div>
 
     </div>
   );
