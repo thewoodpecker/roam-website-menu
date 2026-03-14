@@ -38,7 +38,7 @@ export default function Home() {
                 </div>
                 {/* Heading */}
                 <h1
-                  className="text-left lg:text-center text-[28px] lg:text-[40px] font-bold uppercase leading-[36px] lg:leading-[50px] tracking-[-1px] text-white"
+                  className="text-left lg:text-center text-[22px] lg:text-[40px] font-bold uppercase leading-[28px] lg:leading-[50px] tracking-[-1px] text-white whitespace-nowrap"
                   style={{ fontFamily: "'Possibility', sans-serif" }}
                 >
                   Roam Makes Remote Work
