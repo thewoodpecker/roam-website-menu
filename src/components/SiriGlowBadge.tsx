@@ -36,15 +36,15 @@ export default function SiriGlowBadge({ children }: { children: React.ReactNode 
     function createGradient(angle: number, alpha: number) {
       const grad = ctx!.createConicGradient(angle, w / 2, h / 2);
       const a = alpha;
-      grad.addColorStop(0, `rgba(255,255,255,${a * 0.3})`);
-      grad.addColorStop(0.12, `rgba(180,180,210,${a * 0.15})`);
-      grad.addColorStop(0.25, `rgba(255,255,255,${a * 0.95})`);
-      grad.addColorStop(0.37, `rgba(255,255,255,${a * 0.8})`);
-      grad.addColorStop(0.5, `rgba(255,255,255,${a * 0.1})`);
-      grad.addColorStop(0.62, `rgba(200,200,220,${a * 0.4})`);
-      grad.addColorStop(0.75, `rgba(255,255,255,${a * 0.9})`);
-      grad.addColorStop(0.88, `rgba(180,180,210,${a * 0.15})`);
-      grad.addColorStop(1.0, `rgba(255,255,255,${a * 0.3})`);
+      grad.addColorStop(0, `rgba(247,207,140,${a * 0.3})`);
+      grad.addColorStop(0.12, `rgba(199,134,75,${a * 0.15})`);
+      grad.addColorStop(0.25, `rgba(247,207,140,${a * 0.95})`);
+      grad.addColorStop(0.37, `rgba(247,207,140,${a * 0.8})`);
+      grad.addColorStop(0.5, `rgba(199,134,75,${a * 0.1})`);
+      grad.addColorStop(0.62, `rgba(220,170,100,${a * 0.4})`);
+      grad.addColorStop(0.75, `rgba(247,207,140,${a * 0.9})`);
+      grad.addColorStop(0.88, `rgba(199,134,75,${a * 0.15})`);
+      grad.addColorStop(1.0, `rgba(247,207,140,${a * 0.3})`);
       return grad;
     }
 
