@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import MobileBookDemo from "@/components/MobileBookDemo";
+import SiriGlowBadge from "@/components/SiriGlowBadge";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -37,7 +38,7 @@ export default function Home() {
             <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-0">
               <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-1">
                 {/* Badge */}
-                <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-2.5 py-1 lg:px-3 lg:py-1.5 backdrop-blur-[50px]">
+                <SiriGlowBadge>
                   <span className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
                     style={{
                       fontFamily: "var(--font-possibility), sans-serif",
@@ -46,7 +47,7 @@ export default function Home() {
                   >
                     VIRTUAL OFFICE PLATFORM
                   </span>
-                </div>
+                </SiriGlowBadge>
                 {/* Heading */}
                 <h1
                   className="text-left lg:text-center text-[22px] lg:text-[40px] font-bold uppercase leading-[28px] lg:leading-[50px] tracking-[-1px] text-white whitespace-nowrap"
