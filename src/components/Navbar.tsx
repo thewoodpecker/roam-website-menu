@@ -584,14 +584,14 @@ export default function Navbar() {
               transform: mobileActivePanel ? "translateX(-100%)" : "translateX(0)",
             }}
           >
-            <div className="relative h-full">
+            <div className="relative flex flex-col h-full">
               {/* Top gradient fade */}
               <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-black to-transparent" />
-              {/* Bottom gradient fade */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-black to-transparent" />
+              {/* Bottom gradient fade — sits above the button */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom,12px)+68px)] z-10 h-24 bg-gradient-to-t from-black to-transparent" />
 
               {/* Scrollable content */}
-              <div className="h-full overflow-y-auto px-6 pt-5 pb-[env(safe-area-inset-bottom,24px)]">
+              <div className="flex-1 overflow-y-auto px-6 pt-5 pb-6">
                 {/* Products inline */}
                 <h3
                   className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text pt-2 pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-transparent"
@@ -655,15 +655,16 @@ export default function Navbar() {
                   </svg>
                 </button>
 
-                {/* Book Demo at bottom of scroll */}
-                <div className="pt-6 pb-4">
-                  <a
-                    href="/demo"
-                    className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
-                  >
-                    Book Demo
-                  </a>
-                </div>
+              </div>
+
+              {/* Pinned button at bottom */}
+              <div className="shrink-0 relative z-20 px-6 pb-[env(safe-area-inset-bottom,12px)] pt-3">
+                <a
+                  href="/demo"
+                  className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
+                >
+                  Book Demo
+                </a>
               </div>
             </div>
           </div>
