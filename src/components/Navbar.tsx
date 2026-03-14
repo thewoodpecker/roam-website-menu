@@ -733,7 +733,7 @@ export default function Navbar() {
                         ))}
                       </div>
                       {colIndex < navItem.menu!.length - 1 && (
-                        <div className="mt-3 h-px bg-white/10" />
+                        <div className="mt-3 -mx-6 h-px bg-white/10" />
                       )}
                     </div>
                   ))}
