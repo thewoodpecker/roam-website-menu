@@ -573,59 +573,51 @@ export default function Navbar() {
               transform: mobileActivePanel ? "translateX(-100%)" : "translateX(0)",
             }}
           >
-            <div className="flex flex-col px-6 py-3 pb-[env(safe-area-inset-bottom,24px)]">
-              {navItems.map((item) =>
-                item.menu ? (
-                  <button
-                    key={item.label}
-                    onClick={() => openMobilePanel(item.label)}
-                    className="flex items-center justify-between py-3.5 text-[17px] font-semibold text-white active:opacity-70"
-                  >
-                    {item.label}
-                    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/30">
-                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </button>
-                ) : (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={toggleMobileMenu}
-                    className="py-3.5 text-[17px] font-semibold text-white active:opacity-70"
-                  >
-                    {item.label}
-                  </a>
-                )
-              )}
+            <div className="flex flex-col justify-between h-full px-6 py-3 pb-[env(safe-area-inset-bottom,24px)]">
+              <div className="flex flex-col">
+                {navItems.map((item) =>
+                  item.menu ? (
+                    <button
+                      key={item.label}
+                      onClick={() => openMobilePanel(item.label)}
+                      className="flex items-center justify-between py-3.5 text-[17px] font-semibold text-white active:opacity-70"
+                    >
+                      {item.label}
+                      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/30">
+                        <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={toggleMobileMenu}
+                      className="py-3.5 text-[17px] font-semibold text-white active:opacity-70"
+                    >
+                      {item.label}
+                    </a>
+                  )
+                )}
 
-              <div className="my-2 h-px bg-white/10" />
+                <div className="my-2 h-px bg-white/10" />
 
-              <button
-                onClick={() => openMobilePanel("Existing Members")}
-                className="flex items-center justify-between py-3.5 text-[17px] font-semibold text-white/60 active:opacity-70"
-              >
-                Existing Members
-                <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/30">
-                  <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-
-              <div className="my-2 h-px bg-white/10" />
-
-              <div className="flex flex-col gap-3 pt-3">
-                <a
-                  href="/demo"
-                  className="flex items-center justify-center rounded-xl bg-white py-3.5 text-[15px] font-semibold text-[#1a1a1a] active:bg-white/90"
+                <button
+                  onClick={() => openMobilePanel("Existing Members")}
+                  className="flex items-center justify-between py-3.5 text-[17px] font-semibold text-white/60 active:opacity-70"
                 >
-                  Book Demo
-                </a>
-                <a
-                  href="/trial"
-                  className="flex items-center justify-center rounded-xl bg-white/10 py-3.5 text-[15px] font-semibold text-white active:bg-white/15"
-                >
-                  Free Trial
-                </a>
+                  Existing Members
+                  <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/30">
+                    <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
               </div>
+
+              <a
+                href="/demo"
+                className="flex items-center justify-center rounded-xl bg-white py-3.5 text-[15px] font-semibold text-[#1a1a1a] active:bg-white/90"
+              >
+                Book Demo
+              </a>
             </div>
           </div>
 
