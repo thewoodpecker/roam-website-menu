@@ -33,30 +33,23 @@ export default function SiriGlowBadge({ children }: { children: React.ReactNode 
 
     resize();
 
-    function createGradient(
-      angle: number,
-      alpha: number,
-    ) {
-      const cx = w / 2;
-      const cy = h / 2;
-      const grad = ctx!.createConicGradient(angle, cx, cy);
+    function createGradient(angle: number, alpha: number) {
+      const grad = ctx!.createConicGradient(angle, w / 2, h / 2);
       const a = alpha;
-
       grad.addColorStop(0, `rgba(255,255,255,${a * 0.3})`);
-      grad.addColorStop(0.1, `rgba(180,180,200,${a * 0.2})`);
-      grad.addColorStop(0.25, `rgba(255,255,255,${a * 0.9})`);
-      grad.addColorStop(0.35, `rgba(255,255,255,${a * 0.85})`);
-      grad.addColorStop(0.5, `rgba(255,255,255,${a * 0.15})`);
-      grad.addColorStop(0.65, `rgba(210,210,220,${a * 0.5})`);
-      grad.addColorStop(0.75, `rgba(255,255,255,${a * 0.8})`);
-      grad.addColorStop(0.9, `rgba(180,180,200,${a * 0.2})`);
+      grad.addColorStop(0.12, `rgba(180,180,210,${a * 0.15})`);
+      grad.addColorStop(0.25, `rgba(255,255,255,${a * 0.95})`);
+      grad.addColorStop(0.37, `rgba(255,255,255,${a * 0.8})`);
+      grad.addColorStop(0.5, `rgba(255,255,255,${a * 0.1})`);
+      grad.addColorStop(0.62, `rgba(200,200,220,${a * 0.4})`);
+      grad.addColorStop(0.75, `rgba(255,255,255,${a * 0.9})`);
+      grad.addColorStop(0.88, `rgba(180,180,210,${a * 0.15})`);
       grad.addColorStop(1.0, `rgba(255,255,255,${a * 0.3})`);
-
       return grad;
     }
 
-    function roundedRectPath() {
-      const r = h / 2; // fully rounded (pill shape)
+    function badgePath() {
+      const r = h / 2;
       ctx!.beginPath();
       ctx!.moveTo(r, 0);
       ctx!.lineTo(w - r, 0);
@@ -81,44 +74,36 @@ export default function SiriGlowBadge({ children }: { children: React.ReactNode 
       const baseAlpha = 0.85 - 0.45 * eased;
       const alpha = baseAlpha * pulse;
 
-      // Manual blur: draw multiple strokes with increasing width and decreasing opacity
-      // This replaces ctx.filter="blur()" which doesn't work on Safari iOS
+      // Clip everything to the badge shape
+      ctx!.save();
+      badgePath();
+      ctx!.clip();
 
-      // Outer glow layers (wide, faint strokes for soft glow)
-      const glowLayers = [
-        { lineWidth: 24, opacity: 0.04 },
-        { lineWidth: 18, opacity: 0.06 },
-        { lineWidth: 14, opacity: 0.08 },
-        { lineWidth: 10, opacity: 0.12 },
-        { lineWidth: 7, opacity: 0.18 },
+      // Draw glow layers — strokes centered on the border, only inner half visible
+      // Wide strokes at low opacity = soft diffuse glow fading inward
+      // Thin strokes at high opacity = bright edge
+      const gradient = createGradient(angle, alpha);
+
+      const layers = [
+        { lineWidth: 40, opacity: 0.04 },
+        { lineWidth: 30, opacity: 0.06 },
+        { lineWidth: 22, opacity: 0.08 },
+        { lineWidth: 16, opacity: 0.10 },
+        { lineWidth: 11, opacity: 0.14 },
+        { lineWidth: 7, opacity: 0.20 },
+        { lineWidth: 4, opacity: 0.35 },
+        { lineWidth: 2, opacity: 0.55 },
+        { lineWidth: 1, opacity: 0.80 },
       ];
 
-      for (const layer of glowLayers) {
-        ctx!.save();
+      for (const layer of layers) {
         ctx!.globalAlpha = layer.opacity;
-        roundedRectPath();
-        ctx!.strokeStyle = createGradient(angle, alpha);
+        badgePath();
+        ctx!.strokeStyle = gradient;
         ctx!.lineWidth = layer.lineWidth;
         ctx!.stroke();
-        ctx!.restore();
       }
 
-      // Core layer (sharp bright edge)
-      ctx!.save();
-      ctx!.globalAlpha = 0.7;
-      roundedRectPath();
-      ctx!.strokeStyle = createGradient(angle, alpha);
-      ctx!.lineWidth = 2;
-      ctx!.stroke();
-      ctx!.restore();
-
-      // Inner bright line
-      ctx!.save();
-      ctx!.globalAlpha = 0.9;
-      roundedRectPath();
-      ctx!.strokeStyle = createGradient(angle, alpha);
-      ctx!.lineWidth = 1;
-      ctx!.stroke();
       ctx!.restore();
 
       rafRef.current = requestAnimationFrame(draw);
@@ -136,12 +121,12 @@ export default function SiriGlowBadge({ children }: { children: React.ReactNode 
   }, []);
 
   return (
-    <div ref={containerRef} className="relative overflow-hidden rounded-full">
+    <div ref={containerRef} className="relative rounded-full">
       <canvas
         ref={canvasRef}
         className="pointer-events-none absolute inset-0"
       />
-      <div className="relative rounded-full bg-black/70 m-[1px] px-2.5 py-1 lg:px-3 lg:py-1.5">
+      <div className="relative px-2.5 py-1 lg:px-3 lg:py-1.5">
         {children}
       </div>
     </div>
