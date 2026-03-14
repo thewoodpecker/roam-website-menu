@@ -584,8 +584,14 @@ export default function Navbar() {
               transform: mobileActivePanel ? "translateX(-100%)" : "translateX(0)",
             }}
           >
-            <div className="flex flex-col justify-between h-full py-3 pb-[env(safe-area-inset-bottom,24px)]">
-              <div className="flex flex-col overflow-y-auto px-6">
+            <div className="relative h-full">
+              {/* Top gradient fade */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-black to-transparent" />
+              {/* Bottom gradient fade */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-black to-transparent" />
+
+              {/* Scrollable content */}
+              <div className="h-full overflow-y-auto px-6 pt-5 pb-[env(safe-area-inset-bottom,24px)]">
                 {/* Products inline */}
                 <h3
                   className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text pt-2 pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-transparent"
@@ -648,11 +654,9 @@ export default function Navbar() {
                     <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
-              </div>
 
-              <div className="flex flex-col shrink-0">
-                <div className="h-px bg-white/10" />
-                <div className="px-6 pt-3">
+                {/* Book Demo at bottom of scroll */}
+                <div className="pt-6 pb-4">
                   <a
                     href="/demo"
                     className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
