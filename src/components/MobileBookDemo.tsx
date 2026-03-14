@@ -23,10 +23,9 @@ export default function MobileBookDemo() {
       {/* Inline button in hero */}
       <div ref={inlineRef} className="w-full lg:hidden">
         <div
-          className="flex w-full items-center justify-center rounded-2xl px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]"
-          style={{ background: "linear-gradient(180deg, #F7CF8C 0%, #C7864B 100%)" }}
+          className="flex w-full items-center justify-center rounded-2xl bg-white px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]"
         >
-          <span className="text-base font-medium leading-6 tracking-[-0.32px] text-black">
+          <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
             Book Demo
           </span>
         </div>
@@ -41,10 +40,9 @@ export default function MobileBookDemo() {
         }}
       >
         <div
-          className="flex w-full items-center justify-center rounded-2xl px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]"
-          style={{ background: "linear-gradient(180deg, #F7CF8C 0%, #C7864B 100%)" }}
+          className="flex w-full items-center justify-center rounded-2xl bg-white px-6 py-3.5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.18),0px_6px_10px_4px_rgba(0,0,0,0.08)]"
         >
-          <span className="text-base font-medium leading-6 tracking-[-0.32px] text-black">
+          <span className="text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a]">
             Book Demo
           </span>
         </div>
