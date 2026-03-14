@@ -23,6 +23,9 @@ export default function Home() {
         {/* Navbar */}
         <Navbar />
 
+        {/* Black gradient behind hero content on mobile */}
+        <div className="absolute inset-x-0 bottom-0 z-[5] h-[45%] bg-gradient-to-b from-transparent to-black pointer-events-none lg:hidden" />
+
         {/* Hero Content */}
         <div className="relative z-10 flex w-full flex-col items-start lg:items-center justify-end pb-10 px-5 lg:px-10">
           <div className="flex flex-col items-start lg:items-center gap-4 max-w-full">
