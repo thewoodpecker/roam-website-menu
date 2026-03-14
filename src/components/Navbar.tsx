@@ -607,7 +607,7 @@ export default function Navbar() {
                     key={item.title}
                     href={item.href}
                     onClick={toggleMobileMenu}
-                    className="py-2 active:opacity-70"
+                    className="py-3 active:opacity-70"
                   >
                     <span className="block text-[15px] font-medium text-white">{item.title}</span>
                     {item.description && (
@@ -624,10 +624,10 @@ export default function Navbar() {
                     <button
                       key={item.label}
                       onClick={() => openMobilePanel(item.label)}
-                      className="flex items-center justify-between py-3.5 text-[17px] font-semibold text-white active:opacity-70"
+                      className="flex w-full items-center justify-between py-3.5 text-[17px] font-semibold text-white active:opacity-70"
                     >
                       {item.label}
-                      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/30">
+                      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="shrink-0 ml-4 text-white/30">
                         <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </button>
@@ -643,14 +643,12 @@ export default function Navbar() {
                   )
                 )}
 
-                <div className="my-2 h-px bg-white/10" />
-
                 <button
                   onClick={() => openMobilePanel("Existing Members")}
-                  className="flex items-center justify-between py-3.5 text-[17px] font-semibold text-white/60 active:opacity-70"
+                  className="flex w-full items-center justify-between py-3.5 text-[17px] font-semibold text-white/60 active:opacity-70"
                 >
                   Existing Members
-                  <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="text-white/30">
+                  <svg width="7" height="12" viewBox="0 0 7 12" fill="none" className="shrink-0 ml-4 text-white/30">
                     <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
