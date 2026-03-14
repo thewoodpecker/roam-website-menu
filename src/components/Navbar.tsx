@@ -579,29 +579,28 @@ export default function Navbar() {
         >
           {/* Root panel */}
           <div
-            className="absolute inset-0 overflow-y-auto transition-transform duration-300 ease-out"
+            className="absolute inset-0 transition-transform duration-300 ease-out"
             style={{
               transform: mobileActivePanel ? "translateX(-100%)" : "translateX(0)",
             }}
           >
-            <div className="relative h-full">
-              {/* Top gradient fade */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[80px] bg-gradient-to-b from-black to-transparent" />
-              {/* Bottom gradient fade */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-32 bg-gradient-to-t from-black to-transparent" />
+            {/* Top gradient fade — fixed above scroll */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[80px] bg-gradient-to-b from-black to-transparent" />
+            {/* Bottom gradient fade — fixed below scroll */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-32 bg-gradient-to-t from-black to-transparent" />
 
-              {/* Pinned button at bottom */}
-              <div className="absolute inset-x-0 bottom-0 z-40 px-6 pb-[env(safe-area-inset-bottom,12px)] pt-3">
-                <a
-                  href="/demo"
-                  className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
-                >
-                  Book Demo
-                </a>
-              </div>
+            {/* Pinned button at bottom */}
+            <div className="absolute inset-x-0 bottom-0 z-40 px-6 pb-[env(safe-area-inset-bottom,12px)] pt-3">
+              <a
+                href="/demo"
+                className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
+              >
+                Book Demo
+              </a>
+            </div>
 
-              {/* Scrollable content — full height, padded for nav and button */}
-              <div className="absolute inset-0 overflow-y-auto px-6 pt-[72px] pb-[calc(env(safe-area-inset-bottom,12px)+80px)]">
+            {/* Scrollable content — full height, padded for nav and button */}
+            <div className="absolute inset-0 overflow-y-auto px-6 pt-[72px] pb-[calc(env(safe-area-inset-bottom,12px)+80px)]">
                 {/* Products inline */}
                 <h3
                   className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text pt-2 pb-[16px] text-[11px] font-bold uppercase tracking-[0.5px] text-transparent"
@@ -668,7 +667,6 @@ export default function Navbar() {
                 </div>
 
               </div>
-            </div>
           </div>
 
           {/* Sub-panels */}
