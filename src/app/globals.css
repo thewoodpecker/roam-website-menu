@@ -31,7 +31,7 @@ body {
 }
 
 .animate-silver-swipe {
-  animation: silver-swipe 3s ease-out infinite;
+  animation: silver-swipe 6s ease-out infinite;
 }
 
 .squircle {
