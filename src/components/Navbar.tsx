@@ -435,7 +435,7 @@ export default function Navbar() {
       <div
         className="relative z-10 flex lg:hidden h-[56px] items-center justify-between px-4"
         style={{
-          background: mobileMenuOpen ? "#000000" : "transparent",
+          background: "transparent",
           transition: mobileMenuOpen
             ? "background-color 400ms cubic-bezier(0.33,1,0.68,1)"
             : "background-color 300ms cubic-bezier(0.32,0,0.67,0)",
@@ -547,7 +547,7 @@ export default function Navbar() {
 
       {/* ===== Mobile Menu Overlay ===== */}
       <div
-        className="fixed inset-x-0 top-[56px] bottom-0 z-[5] overflow-hidden lg:hidden"
+        className="fixed inset-0 z-[5] overflow-hidden lg:hidden"
         style={{ pointerEvents: mobileMenuOpen ? "auto" : "none" }}
       >
         {/* Backdrop */}
@@ -584,14 +584,14 @@ export default function Navbar() {
               transform: mobileActivePanel ? "translateX(-100%)" : "translateX(0)",
             }}
           >
-            <div className="relative flex flex-col h-full">
-              {/* Top gradient fade — from top of panel */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-12 bg-gradient-to-b from-black to-transparent" />
+            <div className="relative flex flex-col h-full pt-[56px]">
+              {/* Top gradient fade — starts at top of screen, covers header area */}
+              <div className="pointer-events-none absolute inset-x-0 top-[56px] z-30 h-16 bg-gradient-to-b from-black to-transparent" />
               {/* Bottom gradient fade — from bottom of screen */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-28 bg-gradient-to-t from-black to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-32 bg-gradient-to-t from-black to-transparent" />
 
               {/* Scrollable content */}
-              <div className="flex-1 overflow-y-auto px-6 pt-5 pb-6">
+              <div className="flex-1 overflow-y-auto px-6 pt-4 pb-6">
                 {/* Products inline */}
                 <h3
                   className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text pt-2 pb-[16px] text-[11px] font-bold uppercase tracking-[0.5px] text-transparent"
