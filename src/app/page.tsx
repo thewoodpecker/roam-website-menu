@@ -145,7 +145,7 @@ export default function Home() {
       </section>
 
       {/* Skeleton sections — mobile only */}
-      <div className="flex flex-col gap-6 px-5 py-10 lg:hidden">
+      <div className="flex flex-col gap-6 px-5 py-10 lg:hidden bg-black">
         {/* Section 1 */}
         <div className="flex flex-col gap-3">
           <div className="h-3 w-24 rounded-full bg-white/5" />
@@ -198,7 +198,8 @@ export default function Home() {
         <div className="h-16" />
       </div>
 
-
+      {/* Pure black footer for Safari bottom toolbar color */}
+      <div className="h-1 bg-black lg:hidden" />
 
     </div>
   );
