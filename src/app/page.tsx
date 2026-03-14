@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-black lg:bg-[#0c0c0e]">
       {/* Hero Section */}
-      <section className="relative flex h-screen w-full flex-col items-start justify-end border-b border-white/10">
+      <section className="relative flex h-screen w-full flex-col items-start justify-end border-b-0 lg:border-b lg:border-white/10">
         {/* Background image */}
         <div className="absolute inset-0 pointer-events-none">
           <Image
@@ -23,6 +23,9 @@ export default function Home() {
 
         {/* Navbar */}
         <Navbar />
+
+        {/* Black gradient at top on mobile */}
+        <div className="absolute inset-x-0 top-0 z-[5] h-[25%] bg-gradient-to-t from-transparent to-black pointer-events-none lg:hidden" />
 
         {/* Black gradient behind hero content on mobile */}
         <div className="absolute inset-x-0 bottom-0 z-[5] h-[45%] bg-gradient-to-b from-transparent to-black pointer-events-none lg:hidden" />
