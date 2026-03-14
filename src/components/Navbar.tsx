@@ -588,8 +588,11 @@ export default function Navbar() {
               <div className="flex flex-col overflow-y-auto px-6">
                 {/* Products inline */}
                 <h3
-                  className="pt-2 pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-white/35"
-                  style={{ fontFamily: "var(--font-possibility), sans-serif" }}
+                  className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text pt-2 pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-transparent"
+                  style={{
+                    fontFamily: "var(--font-possibility), sans-serif",
+                    backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 35%, #e0e0e0 50%, rgba(255,255,255,0.3) 65%, rgba(255,255,255,0.3) 100%)",
+                  }}
                 >
                   Virtual Office Platform
                 </h3>
