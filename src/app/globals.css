@@ -20,6 +20,15 @@ body {
 }
 
 
+@keyframes silver-swipe {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.animate-silver-swipe {
+  animation: silver-swipe 4s ease-in-out infinite;
+}
+
 .squircle {
   border-radius: 35%;
   /* Super ellipse corners when supported (CSS L5) */
