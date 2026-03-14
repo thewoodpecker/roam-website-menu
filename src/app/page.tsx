@@ -42,7 +42,7 @@ export default function Home() {
                   <span className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
                     style={{
                       fontFamily: "var(--font-possibility), sans-serif",
-                      backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 46%, #e0e0e0 50%, rgba(255,255,255,0.3) 54%, rgba(255,255,255,0.3) 100%)",
+                      backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 35%, #e0e0e0 50%, rgba(255,255,255,0.3) 65%, rgba(255,255,255,0.3) 100%)",
                     }}
                   >
                     VIRTUAL OFFICE PLATFORM
