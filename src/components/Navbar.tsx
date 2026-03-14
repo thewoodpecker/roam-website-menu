@@ -586,7 +586,7 @@ export default function Navbar() {
           >
             <div className="relative h-full">
               {/* Top gradient fade */}
-              <div className="pointer-events-none absolute inset-x-0 top-[56px] z-30 h-16 bg-gradient-to-b from-black to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[80px] bg-gradient-to-b from-black to-transparent" />
               {/* Bottom gradient fade */}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-32 bg-gradient-to-t from-black to-transparent" />
 
