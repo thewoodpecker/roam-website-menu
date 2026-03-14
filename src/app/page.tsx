@@ -33,7 +33,7 @@ export default function Home() {
               <div className="flex flex-col items-start lg:items-center gap-1">
                 {/* Badge */}
                 <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-3 py-1.5 backdrop-blur-[50px]">
-                  <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-[10px] lg:text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
+                  <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-base lg:text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
                     style={{ fontFamily: "var(--font-possibility), sans-serif" }}
                   >
                     VIRTUAL OFFICE PLATFORM
@@ -48,7 +48,7 @@ export default function Home() {
                 </h1>
               </div>
               {/* Subtitle */}
-              <p className="text-left lg:text-center text-sm lg:text-base font-normal leading-5 lg:leading-6 tracking-[-0.32px] text-white/50">
+              <p className="text-left lg:text-center text-base font-normal leading-6 tracking-[-0.32px] text-white/50">
                 Virtual Office, Drop-In Meetings, AI Notetaker, AI Assistant, Screen Recorder, AI Agents.
                 <br className="hidden lg:block" />
                 {" "}Unleash Productivity, Culture &amp; AI.
