@@ -585,10 +585,10 @@ export default function Navbar() {
             }}
           >
             <div className="relative flex flex-col h-full">
-              {/* Top gradient fade */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-black to-transparent" />
-              {/* Bottom gradient fade — sits above the button */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom,12px)+68px)] z-10 h-24 bg-gradient-to-t from-black to-transparent" />
+              {/* Top gradient fade — from top of panel */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-12 bg-gradient-to-b from-black to-transparent" />
+              {/* Bottom gradient fade — from bottom of screen */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-28 bg-gradient-to-t from-black to-transparent" />
 
               {/* Scrollable content */}
               <div className="flex-1 overflow-y-auto px-6 pt-5 pb-6">
@@ -660,7 +660,7 @@ export default function Navbar() {
               </div>
 
               {/* Pinned button at bottom */}
-              <div className="shrink-0 relative z-20 px-6 pb-[env(safe-area-inset-bottom,12px)] pt-3">
+              <div className="shrink-0 relative z-40 px-6 pb-[env(safe-area-inset-bottom,12px)] pt-3">
                 <a
                   href="/demo"
                   className="flex items-center justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-medium leading-6 tracking-[-0.32px] text-[#1a1a1a] active:bg-white/90"
