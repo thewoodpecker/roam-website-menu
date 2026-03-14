@@ -12,8 +12,12 @@
   --color-surface-primary: #ffffff;
 }
 
+:root {
+  color-scheme: dark;
+}
+
 body {
-  background: var(--color-background);
+  background-color: #000000;
   color: var(--color-foreground);
   font-family: "Inter", sans-serif;
   margin: 0;
