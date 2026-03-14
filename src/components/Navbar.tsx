@@ -556,8 +556,6 @@ export default function Navbar() {
           style={{
             opacity: mobileMenuOpen ? 1 : 0,
             background: "rgba(0, 0, 0, 0.5)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
             transition: mobileMenuOpen
               ? "opacity 400ms cubic-bezier(0.33, 1, 0.68, 1)"
               : "opacity 300ms cubic-bezier(0.32, 0, 0.67, 0)",
