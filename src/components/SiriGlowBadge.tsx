@@ -16,131 +16,108 @@ export default function SiriGlowBadge({ children }: { children: React.ReactNode 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    let w = 0;
+    let h = 0;
+
     function resize() {
       const dpr = window.devicePixelRatio || 1;
       const rect = container!.getBoundingClientRect();
-      const pad = 20;
-      canvas!.width = (rect.width + pad * 2) * dpr;
-      canvas!.height = (rect.height + pad * 2) * dpr;
-      canvas!.style.width = `${rect.width + pad * 2}px`;
-      canvas!.style.height = `${rect.height + pad * 2}px`;
-      canvas!.style.left = `${-pad}px`;
-      canvas!.style.top = `${-pad}px`;
-      ctx!.scale(dpr, dpr);
+      w = rect.width;
+      h = rect.height;
+      canvas!.width = w * dpr;
+      canvas!.height = h * dpr;
+      canvas!.style.width = `${w}px`;
+      canvas!.style.height = `${h}px`;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     resize();
 
-    function getShades() {
-      return {
-        core: "rgba(255, 255, 255, 0.9)",
-        mid: "rgba(200, 200, 210, 0.6)",
-        dim: "rgba(160, 160, 180, 0.25)",
-      };
-    }
-
-    function buildStops(elapsed: number, intensity: number) {
-      const pulse = 0.7 + 0.3 * Math.sin(elapsed * 2.0);
-      const angle = (90 + elapsed * 45) * (Math.PI / 180);
-      const settle = Math.min(elapsed / 1.5, 1);
-      const eased = settle * settle * (3 - 2 * settle);
-      const baseAlpha = 0.85 - 0.55 * eased;
-      const alpha = baseAlpha * pulse * intensity;
-      const shades = getShades();
-
-      return { angle, alpha, shades };
-    }
-
     function createGradient(
-      ctx: CanvasRenderingContext2D,
-      cx: number,
-      cy: number,
       angle: number,
       alpha: number,
-      shades: { core: string; mid: string; dim: string }
     ) {
-      const grad = ctx.createConicGradient(angle, cx, cy);
+      const cx = w / 2;
+      const cy = h / 2;
+      const grad = ctx!.createConicGradient(angle, cx, cy);
       const a = alpha;
 
       grad.addColorStop(0, `rgba(255,255,255,${a * 0.3})`);
-      grad.addColorStop(0.1, shades.dim);
+      grad.addColorStop(0.1, `rgba(180,180,200,${a * 0.2})`);
       grad.addColorStop(0.25, `rgba(255,255,255,${a * 0.9})`);
-      grad.addColorStop(0.35, shades.core);
-      grad.addColorStop(0.5, `rgba(255,255,255,${a * 0.2})`);
-      grad.addColorStop(0.65, shades.mid);
+      grad.addColorStop(0.35, `rgba(255,255,255,${a * 0.85})`);
+      grad.addColorStop(0.5, `rgba(255,255,255,${a * 0.15})`);
+      grad.addColorStop(0.65, `rgba(210,210,220,${a * 0.5})`);
       grad.addColorStop(0.75, `rgba(255,255,255,${a * 0.8})`);
-      grad.addColorStop(0.9, shades.dim);
+      grad.addColorStop(0.9, `rgba(180,180,200,${a * 0.2})`);
       grad.addColorStop(1.0, `rgba(255,255,255,${a * 0.3})`);
 
       return grad;
+    }
+
+    function roundedRectPath() {
+      const r = h / 2; // fully rounded (pill shape)
+      ctx!.beginPath();
+      ctx!.moveTo(r, 0);
+      ctx!.lineTo(w - r, 0);
+      ctx!.arcTo(w, 0, w, r, r);
+      ctx!.arcTo(w, h, w - r, h, r);
+      ctx!.lineTo(r, h);
+      ctx!.arcTo(0, h, 0, h - r, r);
+      ctx!.arcTo(0, 0, r, 0, r);
+      ctx!.closePath();
     }
 
     function draw(time: number) {
       if (!startRef.current) startRef.current = time;
       const elapsed = (time - startRef.current) / 1000;
 
-      const dpr = window.devicePixelRatio || 1;
-      const rect = container!.getBoundingClientRect();
-      const pad = 20;
-      const w = rect.width + pad * 2;
-      const h = rect.height + pad * 2;
-
       ctx!.clearRect(0, 0, w, h);
 
-      const cx = w / 2;
-      const cy = h / 2;
-      const rx = rect.width / 2;
-      const ry = rect.height / 2;
-      const br = Math.min(rx, ry);
+      const pulse = 0.7 + 0.3 * Math.sin(elapsed * 2.0);
+      const angle = (90 + elapsed * 45) * (Math.PI / 180);
+      const settle = Math.min(elapsed / 1.5, 1);
+      const eased = settle * settle * (3 - 2 * settle);
+      const baseAlpha = 0.85 - 0.45 * eased;
+      const alpha = baseAlpha * pulse;
 
-      // Clip to rounded rect for the stroke path
-      function roundedRectPath(inset: number) {
-        const x = pad - inset;
-        const y = pad - inset;
-        const rw = rect.width + inset * 2;
-        const rh = rect.height + inset * 2;
-        const r = br + inset;
-        ctx!.beginPath();
-        ctx!.moveTo(x + r, y);
-        ctx!.lineTo(x + rw - r, y);
-        ctx!.quadraticCurveTo(x + rw, y, x + rw, y + r);
-        ctx!.lineTo(x + rw, y + rh - r);
-        ctx!.quadraticCurveTo(x + rw, y + rh, x + rw - r, y + rh);
-        ctx!.lineTo(x + r, y + rh);
-        ctx!.quadraticCurveTo(x, y + rh, x, y + rh - r);
-        ctx!.lineTo(x, y + r);
-        ctx!.quadraticCurveTo(x, y, x + r, y);
-        ctx!.closePath();
+      // Manual blur: draw multiple strokes with increasing width and decreasing opacity
+      // This replaces ctx.filter="blur()" which doesn't work on Safari iOS
+
+      // Outer glow layers (wide, faint strokes for soft glow)
+      const glowLayers = [
+        { lineWidth: 24, opacity: 0.04 },
+        { lineWidth: 18, opacity: 0.06 },
+        { lineWidth: 14, opacity: 0.08 },
+        { lineWidth: 10, opacity: 0.12 },
+        { lineWidth: 7, opacity: 0.18 },
+      ];
+
+      for (const layer of glowLayers) {
+        ctx!.save();
+        ctx!.globalAlpha = layer.opacity;
+        roundedRectPath();
+        ctx!.strokeStyle = createGradient(angle, alpha);
+        ctx!.lineWidth = layer.lineWidth;
+        ctx!.stroke();
+        ctx!.restore();
       }
 
-      // Layer 1: Halo (outer glow)
-      const s1 = buildStops(elapsed, 0.8);
+      // Core layer (sharp bright edge)
       ctx!.save();
-      ctx!.globalAlpha = 0.6;
-      ctx!.filter = "blur(12px)";
-      roundedRectPath(2);
-      ctx!.strokeStyle = createGradient(ctx!, cx, cy, s1.angle, s1.alpha, s1.shades);
-      ctx!.lineWidth = 10;
+      ctx!.globalAlpha = 0.7;
+      roundedRectPath();
+      ctx!.strokeStyle = createGradient(angle, alpha);
+      ctx!.lineWidth = 2;
       ctx!.stroke();
       ctx!.restore();
 
-      // Layer 2: Main glow
-      const s2 = buildStops(elapsed, 1.0);
-      ctx!.save();
-      ctx!.globalAlpha = 0.8;
-      ctx!.filter = "blur(3px)";
-      roundedRectPath(0);
-      ctx!.strokeStyle = createGradient(ctx!, cx, cy, s2.angle, s2.alpha, s2.shades);
-      ctx!.lineWidth = 4;
-      ctx!.stroke();
-      ctx!.restore();
-
-      // Layer 3: Core (sharp)
+      // Inner bright line
       ctx!.save();
       ctx!.globalAlpha = 0.9;
-      roundedRectPath(0);
-      ctx!.strokeStyle = createGradient(ctx!, cx, cy, s2.angle, s2.alpha, s2.shades);
-      ctx!.lineWidth = 1.5;
+      roundedRectPath();
+      ctx!.strokeStyle = createGradient(angle, alpha);
+      ctx!.lineWidth = 1;
       ctx!.stroke();
       ctx!.restore();
 
@@ -159,12 +136,12 @@ export default function SiriGlowBadge({ children }: { children: React.ReactNode 
   }, []);
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative overflow-hidden rounded-full">
       <canvas
         ref={canvasRef}
-        className="pointer-events-none absolute"
+        className="pointer-events-none absolute inset-0"
       />
-      <div className="relative rounded-full bg-black/80 px-2.5 py-1 lg:px-3 lg:py-1.5 backdrop-blur-[50px]">
+      <div className="relative rounded-full bg-black/70 m-[1px] px-2.5 py-1 lg:px-3 lg:py-1.5">
         {children}
       </div>
     </div>
