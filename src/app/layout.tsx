@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+const possibility = localFont({
+  src: "../../public/fonts/Possibility-Bold.otf",
+  weight: "700",
+  style: "normal",
+  variable: "--font-possibility",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -19,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${inter.className} antialiased`}>
+      <body className={`${inter.variable} ${inter.className} ${possibility.variable} antialiased`}>
         {children}
       </body>
     </html>

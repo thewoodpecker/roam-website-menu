@@ -34,7 +34,7 @@ export default function Home() {
                 {/* Badge */}
                 <div className="flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-3 py-1.5 backdrop-blur-[50px]">
                   <span className="bg-gradient-to-r from-white/30 via-[#cecece] to-white/30 bg-clip-text text-[10px] lg:text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
-                    style={{ fontFamily: "'Possibility', sans-serif" }}
+                    style={{ fontFamily: "var(--font-possibility), sans-serif" }}
                   >
                     VIRTUAL OFFICE PLATFORM
                   </span>
@@ -42,7 +42,7 @@ export default function Home() {
                 {/* Heading */}
                 <h1
                   className="text-left lg:text-center text-[22px] lg:text-[40px] font-bold uppercase leading-[28px] lg:leading-[50px] tracking-[-1px] text-white whitespace-nowrap"
-                  style={{ fontFamily: "'Possibility', sans-serif" }}
+                  style={{ fontFamily: "var(--font-possibility), sans-serif" }}
                 >
                   Roam Makes Remote Work
                 </h1>

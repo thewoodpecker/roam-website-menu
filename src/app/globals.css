@@ -19,13 +19,6 @@ body {
   margin: 0;
 }
 
-@font-face {
-  font-family: "Possibility";
-  src: local("Possibility Bold"), url("/fonts/Possibility-Bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 
 .squircle {
   border-radius: 35%;

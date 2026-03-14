@@ -149,7 +149,7 @@ function MegaMenu({ columns }: { columns: MenuColumn[] }) {
         {[col1, col2, col3].map((col, i) => (
           <div key={i}>
             {i === 0 && (
-              <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.5px] text-white/40" style={{ fontFamily: "'Possibility', sans-serif" }}>
+              <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.5px] text-white/40" style={{ fontFamily: "var(--font-possibility), sans-serif" }}>
                 {columns[0].heading}
               </h3>
             )}
@@ -669,7 +669,7 @@ export default function Navbar() {
                       {(navItem.menu!.length > 1 || column.heading !== navItem.label) && (
                         <h3
                           className="pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-white/35"
-                          style={{ fontFamily: "'Possibility', sans-serif" }}
+                          style={{ fontFamily: "var(--font-possibility), sans-serif" }}
                         >
                           {column.heading}
                         </h3>
