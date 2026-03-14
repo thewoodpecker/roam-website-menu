@@ -594,7 +594,7 @@ export default function Navbar() {
               <div className="flex-1 overflow-y-auto px-6 pt-5 pb-6">
                 {/* Products inline */}
                 <h3
-                  className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text pt-2 pb-2 text-[11px] font-bold uppercase tracking-[0.5px] text-transparent"
+                  className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text pt-2 pb-[16px] text-[11px] font-bold uppercase tracking-[0.5px] text-transparent"
                   style={{
                     fontFamily: "var(--font-possibility), sans-serif",
                     backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 35%, #e0e0e0 50%, rgba(255,255,255,0.3) 65%, rgba(255,255,255,0.3) 100%)",
