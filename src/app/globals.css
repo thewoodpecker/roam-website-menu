@@ -22,12 +22,12 @@ body {
 
 @keyframes silver-swipe {
   0% { background-position: 100% 0; }
-  40% { background-position: 0% 0; }
+  50% { background-position: 0% 0; }
   100% { background-position: 0% 0; }
 }
 
 .animate-silver-swipe {
-  animation: silver-swipe 18s ease-in-out infinite;
+  animation: silver-swipe 3s ease-out infinite;
 }
 
 .squircle {
