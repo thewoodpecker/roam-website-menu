@@ -19,10 +19,6 @@ const possibility = localFont({
 export const metadata: Metadata = {
   title: "Roam - AI-Powered Virtual Office Platform",
   description: "Virtual Office, Drop-In Meetings, AI Notetaker, AI Assistant, Screen Recorder, AI Agents.",
-  other: {
-    "theme-color": "#000000",
-    "apple-mobile-web-app-status-bar-style": "black-translucent",
-  },
 };
 
 export default function RootLayout({
@@ -32,6 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-black">
+      <head>
+        <meta name="theme-color" content="#000000" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      </head>
       <body className={`${inter.variable} ${inter.className} ${possibility.variable} antialiased bg-black`}>
         {children}
       </body>
