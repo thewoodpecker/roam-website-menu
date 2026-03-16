@@ -116,7 +116,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     if (cascade === "in") return {
       opacity: 0,
       animation: 'menu-cascade-in 250ms ease-out forwards',
-      animationDelay: `${index * 40}ms`,
+      animationDelay: `${150 + index * 50}ms`,
     };
     if (cascade === "out") return {
       animation: 'menu-cascade-out 120ms ease-in forwards',
