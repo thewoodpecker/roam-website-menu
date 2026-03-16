@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-black lg:bg-[#000000]">
       {/* Hero Section */}
-      <section className="relative flex h-screen w-full flex-col items-start justify-end border-b-0 lg:border-b lg:border-white/10 bg-black">
+      <section data-hero-section className="relative flex h-screen w-full flex-col items-start justify-end border-b-0 lg:border-b lg:border-white/10 bg-black">
         {/* Background image */}
         <div className="absolute inset-0 pointer-events-none">
           <Image
@@ -19,7 +19,7 @@ export default function Home() {
             className="object-cover object-left lg:object-center"
             priority
           />
-          <div className="absolute inset-0 hidden lg:block bg-gradient-to-b from-transparent from-[37.66%] to-[rgba(0,0,0,0.6)] to-[83.75%]" />
+          <div data-hero-overlay className="absolute inset-0 hidden lg:block bg-gradient-to-b from-transparent from-[37.66%] to-[rgba(0,0,0,0.6)] to-[83.75%]" />
           <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-transparent from-[37.66%] to-black to-[83.75%]" />
         </div>
 
@@ -33,12 +33,12 @@ export default function Home() {
         <div className="absolute inset-x-0 bottom-0 z-[5] h-[45%] bg-gradient-to-b from-transparent to-black pointer-events-none lg:hidden" />
 
         {/* Hero Content */}
-        <div className="relative z-10 flex w-full flex-col items-start lg:items-center justify-end pb-16 lg:pb-10 px-5 lg:px-10">
-          <div className="flex flex-col items-start lg:items-center gap-6 lg:gap-4 max-w-full">
-            <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-0">
-              <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-1">
+        <div data-hero className="relative z-10 flex w-full flex-col items-start lg:items-center justify-end pb-16 lg:pb-10 px-5 lg:px-10">
+          <div data-hero className="flex flex-col items-start lg:items-center gap-6 lg:gap-4 max-w-full">
+            <div data-hero className="flex flex-col items-start lg:items-center gap-3 lg:gap-0">
+              <div data-hero className="flex flex-col items-start lg:items-center gap-3 lg:gap-1">
                 {/* Badge */}
-                <SiriGlowBadge>
+                <div data-badge><SiriGlowBadge>
                   <span className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
                     style={{
                       fontFamily: "var(--font-possibility), sans-serif",
@@ -47,9 +47,10 @@ export default function Home() {
                   >
                     VIRTUAL OFFICE PLATFORM
                   </span>
-                </SiriGlowBadge>
+                </SiriGlowBadge></div>
                 {/* Heading */}
                 <h1
+                  data-hero-text
                   className="text-left lg:text-center text-[22px] lg:text-[40px] font-bold uppercase leading-[28px] lg:leading-[50px] tracking-[-1px] text-white whitespace-nowrap"
                   style={{ fontFamily: "var(--font-possibility), sans-serif" }}
                 >
@@ -57,7 +58,7 @@ export default function Home() {
                 </h1>
               </div>
               {/* Subtitle */}
-              <p className="text-left lg:text-center text-base font-normal leading-6 tracking-[-0.32px] text-white/50">
+              <p data-hero-text className="text-left lg:text-center text-base font-normal leading-6 tracking-[-0.32px] text-white/50">
                 Virtual Office, Drop-In Meetings, AI Notetaker, AI Assistant, Screen Recorder, AI Agents.
                 <br className="hidden lg:block" />
                 {" "}Unleash Productivity, Culture &amp; AI.
@@ -95,7 +96,7 @@ export default function Home() {
         </div>
 
         {/* Magicast sidebar - left overlay */}
-        <div className="absolute z-10 hidden lg:flex flex-col items-start gap-4" style={{ left: 'calc(20px + var(--nav-left-inset, 0px))', top: 'calc(80px + var(--nav-top-inset, 0px))' }}>
+        <div data-sidebar className="absolute z-10 hidden lg:flex flex-col items-start gap-4" style={{ left: 'calc(20px + var(--nav-left-inset, 0px))', top: 'calc(80px + var(--nav-top-inset, 0px))' }}>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-lg font-semibold leading-6 tracking-[-0.32px] text-white/70">

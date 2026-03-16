@@ -32,6 +32,19 @@ const productsMenu: MenuColumn[] = [
   },
 ];
 
+const slideMedia: { src: string; type: "image" | "video" }[] = [
+  { src: "https://roamstatic.com/website/top-hero-map-3@2x-OMTNGG7K.png", type: "image" },
+  { src: "https://roamstatic.com/website/top-hero-map-2@2x-LB2YURUK.png", type: "image" },
+  { src: "https://roamstatic.com/website/top-hero-theater-1@2x-WHJDYGTK.png", type: "image" },
+  { src: "https://roamstatic.com/website/top-hero-magic-minutes-1@2x-QB3OS4XB.png", type: "image" },
+  { src: "https://roamstatic.com/website/top-hero-lobby-1@2x-7Y3RG7PC.png", type: "image" },
+  { src: "https://roamstatic.com/website/top-hero-magicast-1@2x-HUTVH6T5.png", type: "image" },
+  { src: "https://roamstatic.com/website/top-hero-magic-minutes-1@2x-QB3OS4XB.png", type: "image" },
+  { src: "https://roamstatic.com/website/top-hero-on-it-1@2x-ZHJSAEHN.mp4", type: "video" },
+  { src: "https://roamstatic.com/website/top-hero-on-air-1@2x-WQWNYBSP.mp4", type: "video" },
+  { src: "https://roamstatic.com/website/top-hero-mobile-1@2x-B4W6NMSU.png", type: "image" },
+];
+
 const resourcesMenu: MenuColumn[] = [
   {
     heading: "Solutions",
@@ -238,11 +251,15 @@ export default function Navbar() {
   const [menuHeight, setMenuHeight] = useState(0);
   const prevMenuRef = useRef<string | null>(null);
   const [slideDirection, setSlideDirection] = useState<"left" | "right" | "none">("none");
-  const [menuVersion, setMenuVersion] = useState<"v1" | "v2" | "v3">("v1");
+  const [menuVersion, setMenuVersion] = useState<"v1" | "v2" | "v3" | "v4">("v1");
   const [cascadeState, setCascadeState] = useState<"none" | "in" | "out">("none");
   const closeGenRef = useRef(0);
 
   const [v3Hovered, setV3Hovered] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [fadingSlide, setFadingSlide] = useState<number | null>(null);
+  const prevSlideRef = useRef(0);
+  const slideVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   // Mobile state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -349,17 +366,48 @@ export default function Navbar() {
   const menuIsOpen = displayedMenu !== null;
   const isV2 = menuVersion === "v2";
   const isV3 = menuVersion === "v3";
-  const isEnhanced = isV2 || isV3;
+  const isV4 = menuVersion === "v4";
+  const isUnified = isV3 || isV4;
+  const isEnhanced = isV2 || isV3 || isV4;
   const isSwitchingMenus = isEnhanced && slideDirection !== "none";
   const transitionDuration = isSwitchingMenus ? "400ms" : "300ms";
 
   // Sync nav inset as CSS variable for page-level alignment
   useEffect(() => {
-    const leftInset = isV3 ? '29px' : isV2 ? '20px' : '0px';
+    const leftInset = isUnified ? '29px' : isV2 ? '20px' : '0px';
     const topInset = isEnhanced ? '16px' : '0px';
     document.documentElement.style.setProperty('--nav-left-inset', leftInset);
     document.documentElement.style.setProperty('--nav-top-inset', topInset);
-  }, [isV2, isV3, isEnhanced]);
+    document.documentElement.dataset.menuVersion = menuVersion;
+  }, [isV2, isUnified, isEnhanced, menuVersion]);
+
+  // V4: Auto-advance slideshow
+  useEffect(() => {
+    if (!isV4) return;
+    const timer = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % slideMedia.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isV4, currentSlide]);
+
+  // V4: Track previous slide for fade-out
+  useEffect(() => {
+    if (prevSlideRef.current !== currentSlide) {
+      setFadingSlide(prevSlideRef.current);
+      prevSlideRef.current = currentSlide;
+      const timer = setTimeout(() => setFadingSlide(null), 600);
+      return () => clearTimeout(timer);
+    }
+  }, [currentSlide]);
+
+  // V4: Restart video when slide changes
+  useEffect(() => {
+    const video = slideVideoRefs.current[currentSlide];
+    if (video) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
+  }, [currentSlide]);
 
   function handleMouseEnter(label: string, hasMenu: boolean) {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -403,13 +451,49 @@ export default function Navbar() {
   const activeItem = allMenuItems.find((item) => item.label === displayedMenu);
 
   return (
+    <>
+    {/* V4: Slideshow background — outside nav for correct z-order */}
+    {isV4 && (
+      <div className="fixed inset-0 z-[1] hidden lg:block pointer-events-none">
+        {slideMedia.map((media, i) => (
+          media.type === "video" ? (
+            <video
+              key={media.src}
+              ref={el => { slideVideoRefs.current[i] = el; }}
+              src={media.src}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                opacity: currentSlide === i ? 1 : 0,
+                transition: 'opacity 800ms ease-in-out',
+              }}
+            />
+          ) : (
+            <img
+              key={media.src}
+              src={media.src}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                opacity: currentSlide === i ? 1 : 0,
+                transition: 'opacity 800ms ease-in-out',
+              }}
+            />
+          )
+        ))}
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+    )}
     <nav
       ref={navRef}
       className="absolute top-0 left-0 right-0 z-50"
       onMouseLeave={handleMouseLeave}
     >
       {/* ===== V3 Desktop — Unified Container ===== */}
-      {isV3 && (
+      {isUnified && (
         <div className="hidden lg:block mx-4 mt-4 relative z-10">
           <div
             className="rounded-2xl overflow-hidden transition-colors duration-150 ease-out"
@@ -485,7 +569,7 @@ export default function Navbar() {
       )}
 
       {/* ===== Desktop Header (v1/v2) ===== */}
-      {!isV3 && (
+      {!isUnified && (
         <div className={`hidden lg:grid h-[56px] grid-cols-[1fr_auto_1fr] items-stretch ${isV2 ? "pl-5 pr-10 pt-3" : "pr-1"}`}>
           <div className="flex items-stretch overflow-hidden">
             {navItems.map((item) => (
@@ -558,7 +642,7 @@ export default function Navbar() {
       </div>
 
       {/* ===== Desktop Mega Menu (v1/v2) ===== */}
-      {!isV3 && displayedMenu && activeItem?.menu && (
+      {!isUnified && displayedMenu && activeItem?.menu && (
         <div className="hidden lg:block">
           {/* Background */}
           {isV2 ? (
@@ -871,8 +955,43 @@ export default function Navbar() {
         </div>
       </div>
       {/* Version toggle tab - desktop only */}
-      <div className="fixed bottom-4 left-4 z-[100] hidden lg:flex items-center gap-0.5 rounded-lg bg-white/10 p-0.5 backdrop-blur-md border border-white/10">
-        {(["v1", "v2", "v3"] as const).map((v) => (
+      {/* V4 slideshow is rendered outside nav — see above */}
+      {/* V4: Bottom product features bar */}
+      {isV4 && (
+        <div className="fixed bottom-0 inset-x-0 z-[99] hidden lg:flex items-center justify-center h-[56px]">
+          <div className="flex items-center gap-5">
+            {productsMenu[0].items.map((item, i) => (
+              <React.Fragment key={item.title}>
+                {i > 0 && <div className="w-[3px] h-[3px] rounded-full bg-white/20" />}
+                <button
+                  key={currentSlide === i ? `active-${currentSlide}` : item.title}
+                  onClick={() => setCurrentSlide(i)}
+                  className="text-[13px] tracking-[-0.1px] whitespace-nowrap"
+                  style={currentSlide === i ? {
+                    background: 'linear-gradient(90deg, white 40%, rgba(255,255,255,0.7) 48%, rgba(255,255,255,0.4) 56%)',
+                    backgroundSize: '250% 100%',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    animation: 'text-fill-progress 5s linear',
+                  } : fadingSlide === i ? {
+                    color: 'rgba(255,255,255,0.4)',
+                    animation: 'text-fade-out 600ms ease-out',
+                  } : {
+                    color: 'rgba(255,255,255,0.4)',
+                  }}
+                  onMouseEnter={(e) => { if (currentSlide !== i) e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; }}
+                  onMouseLeave={(e) => { if (currentSlide !== i) e.currentTarget.style.color = 'rgba(255,255,255,0.4)'; }}
+                >
+                  {item.title}
+                </button>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      )}
+      {/* Version toggle */}
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col items-center gap-0.5 rounded-lg bg-white/10 p-0.5 backdrop-blur-md border border-white/10">
+        {(["v1", "v2", "v3", "v4"] as const).map((v) => (
           <button
             key={v}
             onClick={() => setMenuVersion(v)}
@@ -885,5 +1004,6 @@ export default function Navbar() {
         ))}
       </div>
     </nav>
+    </>
   );
 }
