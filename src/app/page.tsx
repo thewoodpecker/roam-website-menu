@@ -95,8 +95,8 @@ export default function Home() {
         </div>
 
         {/* Magicast sidebar - left overlay */}
-        <div className="absolute left-4 top-20 z-10 hidden lg:flex flex-col items-start gap-4">
-          <div className="pl-1">
+        <div className="absolute z-10 hidden lg:flex flex-col items-start gap-4" style={{ left: 'calc(20px + var(--nav-left-inset, 0px))', top: 'calc(80px + var(--nav-top-inset, 0px))' }}>
+          <div>
             <div className="flex items-center gap-2">
               <span className="text-lg font-semibold leading-6 tracking-[-0.32px] text-white/70">
                 AInbox

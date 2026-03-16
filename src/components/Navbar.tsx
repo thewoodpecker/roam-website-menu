@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useRef, useEffect, useCallback, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useLayoutEffect } from "react";
 
 type MenuItem = {
   title: string;
@@ -90,9 +90,9 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: "Products", href: "#", menu: productsMenu },
-  { label: "Pricing", href: "/pricing" },
   { label: "Resources", href: "#", menu: resourcesMenu },
   { label: "Company", href: "#", menu: companyMenu },
+  { label: "Pricing", href: "/pricing" },
 ];
 
 const existingMembersMenu: MenuColumn[] = [
@@ -110,25 +110,46 @@ const allMenuItems: NavItem[] = [
   { label: "Existing Members", href: "#", menu: existingMembersMenu },
 ];
 
-function MegaMenu({ columns, align = "left" }: { columns: MenuColumn[]; align?: "left" | "right" }) {
+function MegaMenu({ columns, align = "left", cascade = "none", spacious = false }: { columns: MenuColumn[]; align?: "left" | "right"; cascade?: "none" | "in" | "out"; spacious?: boolean }) {
   const isSingleColumn = columns.length === 1;
+  const cascadeStyle = (index: number): React.CSSProperties | undefined => {
+    if (cascade === "in") return {
+      opacity: 0,
+      animation: 'menu-cascade-in 250ms ease-out forwards',
+      animationDelay: `${index * 40}ms`,
+    };
+    if (cascade === "out") return {
+      animation: 'menu-cascade-out 120ms ease-in forwards',
+      animationDelay: `${index * 15}ms`,
+    };
+    return undefined;
+  };
+  const itemGap = spacious ? "gap-2.5" : "gap-1";
 
   if (isSingleColumn) {
     const items = columns[0].items;
 
     // Small lists: single vertical column (like Existing Members)
     if (items.length <= 4) {
+      const isRight = align === "right";
       return (
-        <div className={`flex gap-20 px-10 py-8 ${align === "right" ? "justify-end" : ""}`}>
-          <div className={align === "right" ? "text-right" : ""}>
-            <h3 className="mb-4 text-xs text-white/40">
+        <div className={`flex gap-20 px-10 py-8 ${isRight ? "justify-end" : ""}`}>
+          <div className={isRight ? "text-right" : ""}>
+            <h3 className="mb-4 text-xs text-white/40" style={cascadeStyle(0)}>
               {columns[0].heading}
             </h3>
-            <ul className="flex flex-col gap-1">
-              {items.map((item) => (
-                <li key={item.title}>
-                  <a href={item.href} className="block text-lg font-semibold tracking-[-0.3px] text-white/90 transition-colors hover:text-white">
-                    {item.title}
+            <ul className={`flex flex-col ${itemGap}`}>
+              {items.map((item, i) => (
+                <li key={item.title} style={cascadeStyle(i + 1)}>
+                  <a href={item.href} className="group/link block">
+                    <span className={`inline-flex items-center gap-1.5 text-lg font-semibold tracking-[-0.3px] text-white/90 transition-colors group-hover/link:text-white ${isRight ? "flex-row-reverse" : ""}`}>
+                      {item.title}
+                      {isRight ? (
+                        <svg className="inline-block w-3 h-3 opacity-0 translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50 -scale-x-100" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      ) : (
+                        <svg className="inline-block w-3 h-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      )}
+                    </span>
                   </a>
                 </li>
               ))}
@@ -149,14 +170,14 @@ function MegaMenu({ columns, align = "left" }: { columns: MenuColumn[]; align?: 
         {[col1, col2, col3].map((col, i) => (
           <div key={i}>
             {i === 0 && (
-              <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.5px] text-white/40" style={{ fontFamily: "var(--font-possibility), sans-serif" }}>
+              <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.5px] text-white/40" style={{ fontFamily: "var(--font-possibility), sans-serif", ...cascadeStyle(0) }}>
                 {columns[0].heading}
               </h3>
             )}
             {i > 0 && <div className="mb-4 h-[16px]" />}
-            <ul className="flex flex-col gap-1">
-              {col.map((item) => (
-                <li key={item.title}>
+            <ul className={`flex flex-col ${itemGap}`}>
+              {col.map((item, j) => (
+                <li key={item.title} style={cascadeStyle(j + 1)}>
                   <a
                     href={item.href}
                     className="group/link block"
@@ -182,17 +203,20 @@ function MegaMenu({ columns, align = "left" }: { columns: MenuColumn[]; align?: 
     <div className="flex gap-20 px-10 py-8">
       {columns.map((column) => (
         <div key={column.heading}>
-          <h3 className="mb-4 text-xs text-white/40">
+          <h3 className="mb-4 text-xs text-white/40" style={cascadeStyle(0)}>
             {column.heading}
           </h3>
-          <ul className="flex flex-col gap-1">
-            {column.items.map((item) => (
-              <li key={item.title}>
+          <ul className={`flex flex-col ${itemGap}`}>
+            {column.items.map((item, i) => (
+              <li key={item.title} style={cascadeStyle(i + 1)}>
                 <a
                   href={item.href}
-                  className="block text-lg font-semibold tracking-[-0.3px] text-white/90 transition-colors hover:text-white"
+                  className="group/link block"
                 >
-                  {item.title}
+                  <span className="inline-flex items-center gap-1.5 text-lg font-semibold tracking-[-0.3px] text-white/90 transition-colors group-hover/link:text-white">
+                    {item.title}
+                    <svg className="inline-block w-3 h-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </span>
                 </a>
               </li>
             ))}
@@ -214,6 +238,9 @@ export default function Navbar() {
   const [menuHeight, setMenuHeight] = useState(0);
   const prevMenuRef = useRef<string | null>(null);
   const [slideDirection, setSlideDirection] = useState<"left" | "right" | "none">("none");
+  const [menuVersion, setMenuVersion] = useState<"v1" | "v2">("v1");
+  const [cascadeState, setCascadeState] = useState<"none" | "in" | "out">("none");
+  const closeGenRef = useRef(0);
 
   // Mobile state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -221,22 +248,41 @@ export default function Navbar() {
 
   // Desktop menu logic
   const closeMenu = useCallback(() => {
-    setIsAnimating(false);
-    setTimeout(() => {
-      setDisplayedMenu(null);
-    }, 250);
-  }, []);
+    if (menuVersion === "v2") {
+      const gen = ++closeGenRef.current;
+      setCascadeState("out");
+      setTimeout(() => {
+        if (closeGenRef.current !== gen) return;
+        setIsAnimating(false);
+        setTimeout(() => {
+          if (closeGenRef.current !== gen) return;
+          setDisplayedMenu(null);
+          setCascadeState("none");
+        }, 300);
+      }, 150);
+    } else {
+      setIsAnimating(false);
+      setTimeout(() => {
+        setDisplayedMenu(null);
+      }, 250);
+    }
+  }, [menuVersion]);
 
   useEffect(() => {
     if (activeMenu) {
+      closeGenRef.current++;
       const menuLabels = allMenuItems.filter(n => n.menu).map(n => n.label);
       const prevIndex = prevMenuRef.current ? menuLabels.indexOf(prevMenuRef.current) : -1;
       const nextIndex = menuLabels.indexOf(activeMenu);
 
-      if (prevMenuRef.current && prevMenuRef.current !== activeMenu && prevIndex !== -1) {
+      const isSwitching = prevMenuRef.current && prevMenuRef.current !== activeMenu && prevIndex !== -1;
+      if (isSwitching) {
         setSlideDirection(nextIndex > prevIndex ? "right" : "left");
+        setCascadeState("none");
       } else {
         setSlideDirection("none");
+        const isInitialOpen = !prevMenuRef.current;
+        setCascadeState(menuVersion === "v2" && isInitialOpen ? "in" : "none");
       }
 
       prevMenuRef.current = activeMenu;
@@ -251,7 +297,7 @@ export default function Navbar() {
       setSlideDirection("none");
       closeMenu();
     }
-  }, [activeMenu, closeMenu]);
+  }, [activeMenu, closeMenu, menuVersion]);
 
   useLayoutEffect(() => {
     if (displayedMenu && menuContentRef.current) {
@@ -262,7 +308,7 @@ export default function Navbar() {
         setMenuHeight(activeEl.scrollHeight);
       }
     }
-  }, [displayedMenu]);
+  }, [displayedMenu, menuVersion]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -299,6 +345,15 @@ export default function Navbar() {
   }, []);
 
   const menuIsOpen = displayedMenu !== null;
+  const isV2 = menuVersion === "v2";
+  const isSwitchingMenus = isV2 && slideDirection !== "none";
+  const transitionDuration = isSwitchingMenus ? "400ms" : "300ms";
+
+  // Sync nav inset as CSS variable for page-level alignment
+  useEffect(() => {
+    document.documentElement.style.setProperty('--nav-left-inset', isV2 ? '20px' : '0px');
+    document.documentElement.style.setProperty('--nav-top-inset', isV2 ? '16px' : '0px');
+  }, [isV2]);
 
   function handleMouseEnter(label: string, hasMenu: boolean) {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -348,7 +403,7 @@ export default function Navbar() {
       onMouseLeave={handleMouseLeave}
     >
       {/* ===== Desktop Header ===== */}
-      <div className="hidden lg:grid h-[56px] grid-cols-[1fr_auto_1fr] items-stretch pr-1">
+      <div className={`hidden lg:grid h-[56px] grid-cols-[1fr_auto_1fr] items-stretch ${isV2 ? "pl-5 pr-10 pt-3" : "pr-1"}`}>
         {/* Left nav links */}
         <div className="flex items-stretch overflow-hidden">
           {navItems.map((item) => (
@@ -482,35 +537,77 @@ export default function Navbar() {
       {/* ===== Desktop Mega Menu ===== */}
       {displayedMenu && activeItem?.menu && (
         <div className="hidden lg:block">
-          {/* Solid black background behind nav + menu */}
-          <div
-            className="pointer-events-none absolute inset-x-0 top-0 z-[-1] transition-all duration-300 ease-out"
-            style={{
-              opacity: isAnimating ? 1 : 0,
-              height: isAnimating && menuHeight ? 56 + 1 + menuHeight : 56,
-              background: "#000000",
-              transformOrigin: "top",
-            }}
-          />
+          {/* Background */}
+          {isV2 ? (
+            <>
+              {/* Nav bar background removed in v2 — transparent nav */}
+              {/* Menu panel background - inset with rounded corners */}
+              <div
+                className="pointer-events-none absolute z-[-1] rounded-2xl"
+                style={{
+                  opacity: isAnimating ? 1 : 0,
+                  left: 40,
+                  right: 40,
+                  top: 72,
+                  height: isAnimating && menuHeight ? menuHeight : 0,
+                  background: "#131415",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  transition: `all ${transitionDuration} ease-out`,
+                }}
+              />
+            </>
+          ) : (
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 z-[-1]"
+              style={{
+                opacity: isAnimating ? 1 : 0,
+                height: isAnimating && menuHeight ? 56 + 1 + menuHeight : 56,
+                background: "#131415",
+                transformOrigin: "top",
+                transition: `all ${transitionDuration} ease-out`,
+              }}
+            />
+          )}
           {/* Dark blur scrim over the rest of the page */}
           <div
-            className="fixed inset-0 z-[-2] transition-opacity duration-300 ease-out"
+            className="fixed inset-0 z-[-2]"
             style={{
               opacity: isAnimating ? 1 : 0,
               background: "rgba(0, 0, 0, 0.5)",
               backdropFilter: "blur(20px) brightness(0.4)",
               WebkitBackdropFilter: "blur(20px) brightness(0.4)",
+              transition: `opacity ${transitionDuration} ease-out`,
             }}
             onClick={() => setActiveMenu(null)}
             onMouseEnter={() => setActiveMenu(null)}
           />
+          {/* V2: Hover bridge between nav and menu + side dismiss zones */}
+          {isV2 && (
+            <>
+              <div
+                className="h-[16px]"
+                onMouseEnter={handleMenuMouseEnter}
+              />
+              <div
+                className="absolute z-[51]"
+                style={{ left: 0, width: 40, top: 72, height: isAnimating && menuHeight ? menuHeight : 0 }}
+                onMouseEnter={() => setActiveMenu(null)}
+              />
+              <div
+                className="absolute z-[51]"
+                style={{ right: 0, width: 40, top: 72, height: isAnimating && menuHeight ? menuHeight : 0 }}
+                onMouseEnter={() => setActiveMenu(null)}
+              />
+            </>
+          )}
           {/* Menu content */}
           <div
             ref={menuContentRef}
             onMouseEnter={handleMenuMouseEnter}
-            className="relative left-0 right-0 z-50 overflow-hidden transition-[height] duration-300 ease-out"
+            className={`relative z-50 overflow-hidden ${isV2 ? "mx-[40px] rounded-2xl" : ""}`}
             style={{
               height: isAnimating && menuHeight ? menuHeight : 0,
+              transition: `height ${transitionDuration} ease-out`,
             }}
           >
             {allMenuItems.filter(n => n.menu).map((navItem) => {
@@ -526,18 +623,26 @@ export default function Navbar() {
                 translateX = "0px";
               }
 
+              const itemCascade: "none" | "in" | "out" = isV2 && isActive ? cascadeState : "none";
+
               return (
                 <div
                   key={navItem.label}
                   data-menu={navItem.label}
-                  className="absolute inset-x-0 top-0 transition-all duration-300 ease-out"
+                  className="absolute inset-x-0 top-0"
                   style={{
                     opacity: isActive && isAnimating ? 1 : 0,
                     transform: `translateX(${isActive ? "0px" : translateX})`,
                     pointerEvents: isActive ? "auto" : "none",
+                    transition: `all ${transitionDuration} ease-out`,
                   }}
                 >
-                  <MegaMenu columns={navItem.menu!} align={navItem.label === "Existing Members" ? "right" : "left"} />
+                  <MegaMenu
+                    columns={navItem.menu!}
+                    align={navItem.label === "Existing Members" ? "right" : "left"}
+                    cascade={itemCascade}
+                    spacious={isV2}
+                  />
                 </div>
               );
             })}
@@ -741,6 +846,25 @@ export default function Navbar() {
               </div>
             ))}
         </div>
+      </div>
+      {/* Version toggle tab - desktop only */}
+      <div className="fixed bottom-4 left-4 z-[100] hidden lg:flex items-center gap-0.5 rounded-lg bg-white/10 p-0.5 backdrop-blur-md border border-white/10">
+        <button
+          onClick={() => setMenuVersion("v1")}
+          className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+            menuVersion === "v1" ? "bg-white text-black" : "text-white/50 hover:text-white"
+          }`}
+        >
+          v1
+        </button>
+        <button
+          onClick={() => setMenuVersion("v2")}
+          className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+            menuVersion === "v2" ? "bg-white text-black" : "text-white/50 hover:text-white"
+          }`}
+        >
+          v2
+        </button>
       </div>
     </nav>
   );
