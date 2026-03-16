@@ -11,7 +11,7 @@ export default function Home() {
       {/* Hero Section */}
       <section data-hero-section className="relative flex h-screen w-full flex-col items-start justify-end border-b-0 lg:border-b lg:border-white/10 bg-black">
         {/* Background image */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div data-hero-bg className="absolute inset-0 pointer-events-none">
           <Image
             src={`${basePath}/images/hero-bg.jpg`}
             alt=""
@@ -38,7 +38,7 @@ export default function Home() {
             <div data-hero className="flex flex-col items-start lg:items-center gap-3 lg:gap-0">
               <div data-hero className="flex flex-col items-start lg:items-center gap-3 lg:gap-1">
                 {/* Badge */}
-                <div data-badge><SiriGlowBadge>
+                <div data-badge style={{ borderRadius: '9999px' } as React.CSSProperties}><SiriGlowBadge>
                   <span className="animate-silver-swipe bg-[length:500%_100%] bg-no-repeat bg-clip-text text-xs font-bold uppercase tracking-[-0.5px] text-transparent"
                     style={{
                       fontFamily: "var(--font-possibility), sans-serif",

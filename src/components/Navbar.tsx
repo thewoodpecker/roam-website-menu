@@ -379,6 +379,9 @@ export default function Navbar() {
     document.documentElement.style.setProperty('--nav-left-inset', leftInset);
     document.documentElement.style.setProperty('--nav-top-inset', topInset);
     document.documentElement.dataset.menuVersion = menuVersion;
+    document.documentElement.style.setProperty('--badge-backdrop', isV4 ? 'blur(12px)' : 'none');
+    document.documentElement.style.setProperty('--badge-bg', isV4 ? 'rgba(255,255,255,0.1)' : 'transparent');
+    document.documentElement.style.setProperty('--badge-border', isV4 ? '1px solid rgba(255,255,255,0.1)' : 'none');
   }, [isV2, isUnified, isEnhanced, menuVersion]);
 
   // V4: Auto-advance slideshow
@@ -958,7 +961,7 @@ export default function Navbar() {
       {/* V4 slideshow is rendered outside nav — see above */}
       {/* V4: Bottom product features bar */}
       {isV4 && (
-        <div className="fixed bottom-0 inset-x-0 z-[99] hidden lg:flex items-center justify-center h-[56px]">
+        <div className="fixed bottom-0 inset-x-0 z-[99] hidden lg:flex items-center justify-center h-[80px]">
           <div className="flex items-center gap-5">
             {productsMenu[0].items.map((item, i) => (
               <React.Fragment key={item.title}>
