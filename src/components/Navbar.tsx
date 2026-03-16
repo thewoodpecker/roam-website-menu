@@ -148,7 +148,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
       return (
         <div className={`flex gap-20 px-10 py-8 ${isRight ? "justify-end" : ""}`}>
           <div className={isRight ? "text-right" : ""}>
-            <h3 className="mb-4 text-xs text-white/40" style={cascadeStyle(0)}>
+            <h3 className="mb-4 text-xs text-white/60" style={cascadeStyle(0)}>
               {columns[0].heading}
             </h3>
             <ul className={`flex flex-col ${itemGap}`}>
@@ -183,7 +183,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
         {[col1, col2, col3].map((col, i) => (
           <div key={i}>
             {i === 0 && (
-              <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.5px] text-white/40" style={{ fontFamily: "var(--font-possibility), sans-serif", ...cascadeStyle(0) }}>
+              <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.5px] text-white/60" style={{ fontFamily: "var(--font-possibility), sans-serif", ...cascadeStyle(0) }}>
                 {columns[0].heading}
               </h3>
             )}
@@ -216,7 +216,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     <div className="flex gap-20 px-10 py-8">
       {columns.map((column) => (
         <div key={column.heading}>
-          <h3 className="mb-4 text-xs text-white/40" style={cascadeStyle(0)}>
+          <h3 className="mb-4 text-xs text-white/60" style={cascadeStyle(0)}>
             {column.heading}
           </h3>
           <ul className={`flex flex-col ${itemGap}`}>
@@ -256,6 +256,8 @@ export default function Navbar() {
   const closeGenRef = useRef(0);
 
   const [v3Hovered, setV3Hovered] = useState(false);
+  const [v5Muted, setV5Muted] = useState(true);
+  const v5VideoRef = useRef<HTMLVideoElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fadingSlide, setFadingSlide] = useState<number | null>(null);
   const prevSlideRef = useRef(0);
@@ -461,14 +463,36 @@ export default function Navbar() {
     {isV5 && (
       <div className="fixed inset-0 z-[1] hidden lg:block pointer-events-none">
         <video
+          ref={v5VideoRef}
           src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/videos/v5-bg.mp4`}
           autoPlay
-          muted
+          muted={v5Muted}
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/40" />
+        <button
+          onClick={() => {
+            setV5Muted(!v5Muted);
+            if (v5VideoRef.current) v5VideoRef.current.muted = !v5Muted;
+          }}
+          className="pointer-events-auto absolute bottom-6 left-6 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 border border-white/10 backdrop-blur-md transition-colors hover:bg-white/20"
+        >
+          {v5Muted ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <line x1="23" y1="9" x2="17" y2="15" />
+              <line x1="17" y1="9" x2="23" y2="15" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+            </svg>
+          )}
+        </button>
       </div>
     )}
     {/* V4: Slideshow background — outside nav for correct z-order */}

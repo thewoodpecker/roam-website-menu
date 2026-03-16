@@ -23,6 +23,18 @@ body {
   margin: 0;
 }
 
+@layer base {
+  button,
+  a,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  select,
+  summary {
+    cursor: pointer;
+  }
+}
+
 
 @keyframes silver-swipe {
   0% { background-position: 100% 0; }
