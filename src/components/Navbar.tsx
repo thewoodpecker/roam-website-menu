@@ -473,11 +473,10 @@ export default function Navbar() {
               </div>
             )}
           </div>
-          {/* Scrim */}
+          {/* Dismiss zone (no blur) */}
           {displayedMenu && activeItem?.menu && (
             <div
               className="fixed inset-0 z-[-1]"
-              style={{ opacity: isAnimating ? 1 : 0, background: "rgba(0, 0, 0, 0.5)", backdropFilter: "blur(20px) brightness(0.4)", WebkitBackdropFilter: "blur(20px) brightness(0.4)", transition: `opacity ${transitionDuration} ease-out` }}
               onClick={() => setActiveMenu(null)}
               onMouseEnter={() => setActiveMenu(null)}
             />
