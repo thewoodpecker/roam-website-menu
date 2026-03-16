@@ -137,6 +137,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     };
     return undefined;
   };
+  const itemPadding = spacious ? "py-2.5 px-5" : "py-1 px-3";
   const itemGap = spacious ? "gap-2.5" : "gap-1";
 
   if (isSingleColumn) {
@@ -146,15 +147,15 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     if (items.length <= 4) {
       const isRight = align === "right";
       return (
-        <div className={`flex gap-20 px-10 py-8 ${isRight ? "justify-end" : ""}`}>
-          <div className={isRight ? "text-right" : ""}>
-            <h3 className="mb-4 text-xs text-white/60" style={cascadeStyle(0)}>
+        <div className={`flex py-8 px-5 ${isRight ? "justify-end" : ""}`}>
+          <div className={`flex-1 ${isRight ? "text-right" : ""}`}>
+            <h3 className="mb-2 px-5 text-xs text-white/60" style={cascadeStyle(0)}>
               {columns[0].heading}
             </h3>
-            <ul className={`flex flex-col ${itemGap}`}>
+            <ul className="flex flex-col">
               {items.map((item, i) => (
                 <li key={item.title} style={cascadeStyle(i + 1)}>
-                  <a href={item.href} className="group/link block">
+                  <a href={item.href} className={`group/link block ${itemPadding}`}>
                     <span className={`inline-flex items-center gap-1.5 text-lg font-semibold tracking-[-0.3px] text-white/90 transition-colors group-hover/link:text-white ${isRight ? "flex-row-reverse" : ""}`}>
                       {item.title}
                       {isRight ? (
@@ -179,21 +180,21 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     const col3 = items.slice(colSize * 2);
 
     return (
-      <div className="flex gap-20 px-10 py-8">
+      <div className="flex py-8 px-5">
         {[col1, col2, col3].map((col, i) => (
-          <div key={i}>
+          <div key={i} className="flex-1">
             {i === 0 && (
-              <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.5px] text-white/60" style={{ fontFamily: "var(--font-possibility), sans-serif", ...cascadeStyle(0) }}>
+              <h3 className="mb-2 px-5 text-xs font-bold uppercase tracking-[0.5px] text-white/60" style={{ fontFamily: "var(--font-possibility), sans-serif", ...cascadeStyle(0) }}>
                 {columns[0].heading}
               </h3>
             )}
-            {i > 0 && <div className="mb-4 h-[16px]" />}
-            <ul className={`flex flex-col ${itemGap}`}>
+            {i > 0 && <div className="mb-2 h-[16px]" />}
+            <ul className="flex flex-col">
               {col.map((item, j) => (
                 <li key={item.title} style={cascadeStyle(j + 1)}>
                   <a
                     href={item.href}
-                    className="group/link block"
+                    className={`group/link block ${itemPadding}`}
                   >
                     <span className="inline-flex items-center gap-1 text-sm font-medium text-white transition-colors group-hover/link:text-white/70">
                       {item.title}
@@ -213,18 +214,18 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
   }
 
   return (
-    <div className="flex gap-20 px-10 py-8">
+    <div className="flex py-8 px-5">
       {columns.map((column) => (
-        <div key={column.heading}>
-          <h3 className="mb-4 text-xs text-white/60" style={cascadeStyle(0)}>
+        <div key={column.heading} className="flex-1">
+          <h3 className="mb-2 px-5 text-xs text-white/60" style={cascadeStyle(0)}>
             {column.heading}
           </h3>
-          <ul className={`flex flex-col ${itemGap}`}>
+          <ul className="flex flex-col">
             {column.items.map((item, i) => (
               <li key={item.title} style={cascadeStyle(i + 1)}>
                 <a
                   href={item.href}
-                  className="group/link block"
+                  className={`group/link block ${itemPadding}`}
                 >
                   <span className="inline-flex items-center gap-1.5 text-lg font-semibold tracking-[-0.3px] text-white/90 transition-colors group-hover/link:text-white">
                     {item.title}
