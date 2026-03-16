@@ -412,12 +412,12 @@ export default function Navbar() {
       {isV3 && (
         <div className="hidden lg:block mx-4 mt-4 relative z-10">
           <div
-            className="rounded-2xl overflow-hidden transition-colors duration-300 ease-out"
+            className="rounded-2xl overflow-hidden transition-colors duration-150 ease-out"
             style={{
-              backgroundColor: v3Hovered || menuIsOpen ? '#131415' : 'transparent',
+              backgroundColor: v3Hovered || activeMenu !== null ? '#131415' : 'transparent',
               borderWidth: 1,
               borderStyle: 'solid',
-              borderColor: v3Hovered || menuIsOpen ? 'rgba(255,255,255,0.06)' : 'transparent',
+              borderColor: v3Hovered || activeMenu !== null ? 'rgba(255,255,255,0.06)' : 'transparent',
             }}
             onMouseEnter={() => { handleMenuMouseEnter(); setV3Hovered(true); }}
             onMouseLeave={() => setV3Hovered(false)}
@@ -453,7 +453,7 @@ export default function Navbar() {
                   transition: `height ${transitionDuration} ease-out`,
                 }}
               >
-                <div className="h-px bg-white/[0.06]" />
+                <div className="h-px bg-white/[0.06] transition-opacity duration-150 ease-out" style={{ opacity: activeMenu !== null ? 1 : 0 }} />
                 <div ref={menuContentRef} className="relative" style={{ height: menuHeight || 'auto' }}>
                   {allMenuItems.filter(n => n.menu).map((navItem) => {
                     const isActive = displayedMenu === navItem.label;
