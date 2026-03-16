@@ -138,6 +138,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     return undefined;
   };
   const itemPadding = spacious ? "py-2.5 px-5" : "py-1 px-3";
+  const headingPadding = spacious ? "px-5" : "px-3";
   const itemGap = spacious ? "gap-2.5" : "gap-1";
 
   if (isSingleColumn) {
@@ -147,9 +148,9 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     if (items.length <= 4) {
       const isRight = align === "right";
       return (
-        <div className={`flex py-8 px-5 ${isRight ? "justify-end" : ""}`}>
-          <div className={`flex-1 ${isRight ? "text-right" : ""}`}>
-            <h3 className="mb-2 px-5 text-xs text-white/60" style={cascadeStyle(0)}>
+        <div className={`flex gap-20 px-10 py-8 ${isRight ? "justify-end" : ""}`}>
+          <div className={isRight ? "text-right" : ""}>
+            <h3 className={`mb-2 text-xs text-white/60 ${headingPadding}`} style={cascadeStyle(0)}>
               {columns[0].heading}
             </h3>
             <ul className="flex flex-col">
@@ -180,11 +181,11 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     const col3 = items.slice(colSize * 2);
 
     return (
-      <div className="flex py-8 px-5">
+      <div className="flex gap-20 px-10 py-8">
         {[col1, col2, col3].map((col, i) => (
-          <div key={i} className="flex-1">
+          <div key={i}>
             {i === 0 && (
-              <h3 className="mb-2 px-5 text-xs font-bold uppercase tracking-[0.5px] text-white/60" style={{ fontFamily: "var(--font-possibility), sans-serif", ...cascadeStyle(0) }}>
+              <h3 className={`mb-2 text-xs font-bold uppercase tracking-[0.5px] text-white/60 ${headingPadding}`} style={{ fontFamily: "var(--font-possibility), sans-serif", ...cascadeStyle(0) }}>
                 {columns[0].heading}
               </h3>
             )}
@@ -214,10 +215,10 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
   }
 
   return (
-    <div className="flex py-8 px-5">
+    <div className="flex gap-20 px-10 py-8">
       {columns.map((column) => (
-        <div key={column.heading} className="flex-1">
-          <h3 className="mb-2 px-5 text-xs text-white/60" style={cascadeStyle(0)}>
+        <div key={column.heading}>
+          <h3 className={`mb-2 text-xs text-white/60 ${headingPadding}`} style={cascadeStyle(0)}>
             {column.heading}
           </h3>
           <ul className="flex flex-col">
