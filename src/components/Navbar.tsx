@@ -251,7 +251,7 @@ export default function Navbar() {
   const [menuHeight, setMenuHeight] = useState(0);
   const prevMenuRef = useRef<string | null>(null);
   const [slideDirection, setSlideDirection] = useState<"left" | "right" | "none">("none");
-  const [menuVersion, setMenuVersion] = useState<"v1" | "v2" | "v3" | "v4">("v1");
+  const [menuVersion, setMenuVersion] = useState<"v1" | "v2" | "v3" | "v4" | "v5">("v1");
   const [cascadeState, setCascadeState] = useState<"none" | "in" | "out">("none");
   const closeGenRef = useRef(0);
 
@@ -267,7 +267,7 @@ export default function Navbar() {
 
   // Desktop menu logic
   const closeMenu = useCallback(() => {
-    if (menuVersion === "v2" || menuVersion === "v3") {
+    if (menuVersion !== "v1") {
       const gen = ++closeGenRef.current;
       setCascadeState("out");
       setTimeout(() => {
@@ -367,8 +367,9 @@ export default function Navbar() {
   const isV2 = menuVersion === "v2";
   const isV3 = menuVersion === "v3";
   const isV4 = menuVersion === "v4";
-  const isUnified = isV3 || isV4;
-  const isEnhanced = isV2 || isV3 || isV4;
+  const isV5 = menuVersion === "v5";
+  const isUnified = isV3 || isV4 || isV5;
+  const isEnhanced = isV2 || isV3 || isV4 || isV5;
   const isSwitchingMenus = isEnhanced && slideDirection !== "none";
   const transitionDuration = isSwitchingMenus ? "400ms" : "300ms";
 
@@ -379,9 +380,10 @@ export default function Navbar() {
     document.documentElement.style.setProperty('--nav-left-inset', leftInset);
     document.documentElement.style.setProperty('--nav-top-inset', topInset);
     document.documentElement.dataset.menuVersion = menuVersion;
-    document.documentElement.style.setProperty('--badge-backdrop', isV4 ? 'blur(12px)' : 'none');
-    document.documentElement.style.setProperty('--badge-bg', isV4 ? 'rgba(255,255,255,0.1)' : 'transparent');
-    document.documentElement.style.setProperty('--badge-border', isV4 ? '1px solid rgba(255,255,255,0.1)' : 'none');
+    const hasBadgeBlur = isV4 || isV5;
+    document.documentElement.style.setProperty('--badge-backdrop', hasBadgeBlur ? 'blur(12px)' : 'none');
+    document.documentElement.style.setProperty('--badge-bg', hasBadgeBlur ? 'rgba(255,255,255,0.1)' : 'transparent');
+    document.documentElement.style.setProperty('--badge-border', hasBadgeBlur ? '1px solid rgba(255,255,255,0.1)' : 'none');
   }, [isV2, isUnified, isEnhanced, menuVersion]);
 
   // V4: Auto-advance slideshow
@@ -455,6 +457,20 @@ export default function Navbar() {
 
   return (
     <>
+    {/* V5: Howard invention box video background */}
+    {isV5 && (
+      <div className="fixed inset-0 z-[1] hidden lg:block pointer-events-none">
+        <video
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/videos/v5-bg.mp4`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+    )}
     {/* V4: Slideshow background — outside nav for correct z-order */}
     {isV4 && (
       <div className="fixed inset-0 z-[1] hidden lg:block pointer-events-none">
@@ -499,12 +515,14 @@ export default function Navbar() {
       {isUnified && (
         <div className="hidden lg:block mx-4 mt-4 relative z-10">
           <div
-            className="rounded-2xl overflow-hidden transition-colors duration-150 ease-out"
+            className="rounded-2xl overflow-hidden transition-all duration-150 ease-out"
             style={{
-              backgroundColor: v3Hovered || activeMenu !== null ? '#131415' : 'transparent',
+              backgroundColor: isV5 ? 'rgba(255,255,255,0.1)' : (v3Hovered || activeMenu !== null ? '#131415' : 'transparent'),
               borderWidth: 1,
               borderStyle: 'solid',
-              borderColor: v3Hovered || activeMenu !== null ? 'rgba(255,255,255,0.06)' : 'transparent',
+              borderColor: isV5 ? 'rgba(255,255,255,0.1)' : (v3Hovered || activeMenu !== null ? 'rgba(255,255,255,0.06)' : 'transparent'),
+              backdropFilter: isV5 ? 'blur(12px)' : 'none',
+              WebkitBackdropFilter: isV5 ? 'blur(12px)' : 'none',
             }}
             onMouseEnter={() => { handleMenuMouseEnter(); setV3Hovered(true); }}
             onMouseLeave={() => setV3Hovered(false)}
@@ -994,7 +1012,7 @@ export default function Navbar() {
       )}
       {/* Version toggle */}
       <div className="fixed right-4 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col items-center gap-0.5 rounded-lg bg-white/10 p-0.5 backdrop-blur-md border border-white/10">
-        {(["v1", "v2", "v3", "v4"] as const).map((v) => (
+        {(["v1", "v2", "v3", "v4", "v5"] as const).map((v) => (
           <button
             key={v}
             onClick={() => setMenuVersion(v)}

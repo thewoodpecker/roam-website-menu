@@ -67,43 +67,48 @@ body {
 }
 
 @media (min-width: 1024px) {
-  [data-menu-version="v4"] [data-hero] {
+  [data-menu-version="v4"] [data-hero],
+  [data-menu-version="v5"] [data-hero] {
     align-items: center !important;
   }
-  [data-menu-version="v4"] [data-hero-text] {
+  [data-menu-version="v4"] [data-hero-text],
+  [data-menu-version="v5"] [data-hero-text] {
     text-align: center !important;
   }
-  [data-menu-version="v4"] [data-hero-section] {
+  [data-menu-version="v4"] [data-hero-section],
+  [data-menu-version="v5"] [data-hero-section] {
     justify-content: center !important;
     align-items: center !important;
     z-index: 5;
     background: transparent !important;
   }
-  [data-menu-version="v4"] [data-hero-bg] {
+  [data-menu-version="v4"] [data-hero-bg],
+  [data-menu-version="v5"] [data-hero-bg] {
     display: none !important;
   }
-  [data-menu-version="v4"] [data-hero-section] > [data-hero] {
+  [data-menu-version="v4"] [data-hero-section] > [data-hero],
+  [data-menu-version="v5"] [data-hero-section] > [data-hero] {
     padding-bottom: 0 !important;
   }
-  [data-menu-version="v4"] [data-hero-overlay] {
+  [data-menu-version="v4"] [data-hero-overlay],
+  [data-menu-version="v5"] [data-hero-overlay] {
     background: rgba(0, 0, 0, 0.5) !important;
   }
-  [data-menu-version="v4"] [data-badge] canvas {
+  [data-menu-version="v4"] [data-badge] canvas,
+  [data-menu-version="v5"] [data-badge] canvas {
     display: none !important;
   }
-  [data-menu-version="v4"] [data-badge] {
+  [data-menu-version="v4"] [data-badge],
+  [data-menu-version="v5"] [data-badge] {
     background: rgba(255, 255, 255, 0.1) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 9999px !important;
     -webkit-backdrop-filter: blur(12px) !important;
     backdrop-filter: blur(12px) !important;
   }
-  [data-menu-version="v4"] [data-sidebar] {
+  [data-menu-version="v4"] [data-sidebar],
+  [data-menu-version="v5"] [data-sidebar] {
     display: none !important;
-  }
-  [data-menu-version="v4"] [data-sidebar] {
-    top: auto !important;
-    bottom: 40px !important;
   }
 }
 
