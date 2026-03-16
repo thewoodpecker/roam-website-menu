@@ -238,9 +238,11 @@ export default function Navbar() {
   const [menuHeight, setMenuHeight] = useState(0);
   const prevMenuRef = useRef<string | null>(null);
   const [slideDirection, setSlideDirection] = useState<"left" | "right" | "none">("none");
-  const [menuVersion, setMenuVersion] = useState<"v1" | "v2">("v1");
+  const [menuVersion, setMenuVersion] = useState<"v1" | "v2" | "v3">("v1");
   const [cascadeState, setCascadeState] = useState<"none" | "in" | "out">("none");
   const closeGenRef = useRef(0);
+
+  const [v3Hovered, setV3Hovered] = useState(false);
 
   // Mobile state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -248,7 +250,7 @@ export default function Navbar() {
 
   // Desktop menu logic
   const closeMenu = useCallback(() => {
-    if (menuVersion === "v2") {
+    if (menuVersion === "v2" || menuVersion === "v3") {
       const gen = ++closeGenRef.current;
       setCascadeState("out");
       setTimeout(() => {
@@ -282,7 +284,7 @@ export default function Navbar() {
       } else {
         setSlideDirection("none");
         const isInitialOpen = !prevMenuRef.current;
-        setCascadeState(menuVersion === "v2" && isInitialOpen ? "in" : "none");
+        setCascadeState(menuVersion !== "v1" && isInitialOpen ? "in" : "none");
       }
 
       prevMenuRef.current = activeMenu;
@@ -346,14 +348,18 @@ export default function Navbar() {
 
   const menuIsOpen = displayedMenu !== null;
   const isV2 = menuVersion === "v2";
-  const isSwitchingMenus = isV2 && slideDirection !== "none";
+  const isV3 = menuVersion === "v3";
+  const isEnhanced = isV2 || isV3;
+  const isSwitchingMenus = isEnhanced && slideDirection !== "none";
   const transitionDuration = isSwitchingMenus ? "400ms" : "300ms";
 
   // Sync nav inset as CSS variable for page-level alignment
   useEffect(() => {
-    document.documentElement.style.setProperty('--nav-left-inset', isV2 ? '20px' : '0px');
-    document.documentElement.style.setProperty('--nav-top-inset', isV2 ? '16px' : '0px');
-  }, [isV2]);
+    const leftInset = isV3 ? '29px' : isV2 ? '20px' : '0px';
+    const topInset = isEnhanced ? '16px' : '0px';
+    document.documentElement.style.setProperty('--nav-left-inset', leftInset);
+    document.documentElement.style.setProperty('--nav-top-inset', topInset);
+  }, [isV2, isV3, isEnhanced]);
 
   function handleMouseEnter(label: string, hasMenu: boolean) {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -402,89 +408,107 @@ export default function Navbar() {
       className="absolute top-0 left-0 right-0 z-50"
       onMouseLeave={handleMouseLeave}
     >
-      {/* ===== Desktop Header ===== */}
-      <div className={`hidden lg:grid h-[56px] grid-cols-[1fr_auto_1fr] items-stretch ${isV2 ? "pl-5 pr-10 pt-3" : "pr-1"}`}>
-        {/* Left nav links */}
-        <div className="flex items-stretch overflow-hidden">
-          {navItems.map((item) => (
-            <button
-              key={item.label}
-              onMouseEnter={() => handleMouseEnter(item.label, !!item.menu)}
-              onClick={() =>
-                item.menu
-                  ? setActiveMenu(activeMenu === item.label ? null : item.label)
-                  : setActiveMenu(null)
-              }
-              className={`flex items-center gap-1.5 px-5 text-sm font-normal leading-5 tracking-[-0.15px] transition-colors duration-200 ${
-                activeMenu === item.label
-                  ? "text-white"
-                  : "text-white/50 hover:text-white"
-              }`}
-            >
-              {item.label}
-              {item.menu && (
-                <svg
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                  className={`transition-transform duration-250 ${activeMenu === item.label ? "rotate-180" : ""}`}
-                >
-                  <path
-                    d="M1 1L5 5L9 1"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              )}
-            </button>
-          ))}
-        </div>
-
-        {/* Center logo */}
-        <div className="flex items-center justify-center">
-          <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/roam-logo.png`}
-            alt="Roam"
-            width={109}
-            height={32}
-            className="object-contain"
-            priority
-          />
-        </div>
-
-        {/* Right actions */}
-        <div className="flex items-center justify-end gap-2">
-          <button
-            onMouseEnter={() => handleMouseEnter("Existing Members", true)}
-            onClick={() => setActiveMenu(activeMenu === "Existing Members" ? null : "Existing Members")}
-            className={`flex items-center gap-1.5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] transition-colors duration-200 ${
-              activeMenu === "Existing Members"
-                ? "text-white"
-                : "text-white/50 hover:text-white"
-            }`}
+      {/* ===== V3 Desktop — Unified Container ===== */}
+      {isV3 && (
+        <div className="hidden lg:block mx-4 mt-4 relative z-10">
+          <div
+            className="rounded-2xl overflow-hidden transition-colors duration-300 ease-out"
+            style={{
+              backgroundColor: v3Hovered || menuIsOpen ? '#131415' : 'transparent',
+              borderWidth: 1,
+              borderStyle: 'solid',
+              borderColor: v3Hovered || menuIsOpen ? 'rgba(255,255,255,0.06)' : 'transparent',
+            }}
+            onMouseEnter={() => { handleMenuMouseEnter(); setV3Hovered(true); }}
+            onMouseLeave={() => setV3Hovered(false)}
           >
-            Existing Members
-            <svg
-              width="10"
-              height="6"
-              viewBox="0 0 10 6"
-              fill="none"
-              className={`transition-transform duration-200 ${activeMenu === "Existing Members" ? "rotate-180" : ""}`}
-            >
-              <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <button className="rounded-lg bg-white/5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] text-white shadow-[inset_0px_0.5px_0px_0px_rgba(255,255,255,0.1)] transition-colors hover:bg-white/10">
-            Book Demo
-          </button>
-          <button className="rounded-lg bg-white/5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] text-white shadow-[inset_0px_0.5px_0px_0px_rgba(255,255,255,0.1)] transition-colors hover:bg-white/10">
-            Free Trial
-          </button>
+            {/* Header */}
+            <div className="grid h-[60px] grid-cols-[1fr_auto_1fr] items-stretch px-3">
+              <div className="flex items-stretch overflow-hidden">
+                {navItems.map((item) => (
+                  <button key={item.label} onMouseEnter={() => handleMouseEnter(item.label, !!item.menu)} onClick={() => item.menu ? setActiveMenu(activeMenu === item.label ? null : item.label) : setActiveMenu(null)} className={`flex items-center gap-1.5 px-5 text-sm font-normal leading-5 tracking-[-0.15px] transition-colors duration-200 ${activeMenu === item.label ? "text-white" : "text-white/50 hover:text-white"}`}>
+                    {item.label}
+                    {item.menu && (<svg width="10" height="6" viewBox="0 0 10 6" fill="none" className={`transition-transform duration-250 ${activeMenu === item.label ? "rotate-180" : ""}`}><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>)}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center justify-center">
+                <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/roam-logo.png`} alt="Roam" width={109} height={32} className="object-contain" priority />
+              </div>
+              <div className="flex items-center justify-end gap-2">
+                <button onMouseEnter={() => handleMouseEnter("Existing Members", true)} onClick={() => setActiveMenu(activeMenu === "Existing Members" ? null : "Existing Members")} className={`flex items-center gap-1.5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] transition-colors duration-200 ${activeMenu === "Existing Members" ? "text-white" : "text-white/50 hover:text-white"}`}>
+                  Existing Members
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className={`transition-transform duration-200 ${activeMenu === "Existing Members" ? "rotate-180" : ""}`}><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </button>
+                <button className="rounded-lg bg-white/5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] text-white shadow-[inset_0px_0.5px_0px_0px_rgba(255,255,255,0.1)] transition-colors hover:bg-white/10">Book Demo</button>
+                <button className="rounded-lg bg-white/5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] text-white shadow-[inset_0px_0.5px_0px_0px_rgba(255,255,255,0.1)] transition-colors hover:bg-white/10">Free Trial</button>
+              </div>
+            </div>
+            {/* Menu expander */}
+            {displayedMenu && activeItem?.menu && (
+              <div
+                className="overflow-hidden"
+                style={{
+                  height: isAnimating && menuHeight ? menuHeight + 1 : 0,
+                  transition: `height ${transitionDuration} ease-out`,
+                }}
+              >
+                <div className="h-px bg-white/[0.06]" />
+                <div ref={menuContentRef} className="relative" style={{ height: menuHeight || 'auto' }}>
+                  {allMenuItems.filter(n => n.menu).map((navItem) => {
+                    const isActive = displayedMenu === navItem.label;
+                    const menuLabels = allMenuItems.filter(n => n.menu).map(n => n.label);
+                    const myIndex = menuLabels.indexOf(navItem.label);
+                    const activeIndex = displayedMenu ? menuLabels.indexOf(displayedMenu) : -1;
+                    let translateX = "0px";
+                    if (!isActive && slideDirection !== "none") { translateX = myIndex < activeIndex ? "-40px" : "40px"; }
+                    const itemCascade: "none" | "in" | "out" = isActive ? cascadeState : "none";
+                    return (
+                      <div key={navItem.label} data-menu={navItem.label} className="absolute inset-x-0 top-0" style={{ opacity: isActive && isAnimating ? 1 : 0, transform: `translateX(${isActive ? "0px" : translateX})`, pointerEvents: isActive ? "auto" : "none", transition: `all ${transitionDuration} ease-out` }}>
+                        <MegaMenu columns={navItem.menu!} align={navItem.label === "Existing Members" ? "right" : "left"} cascade={itemCascade} spacious />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+          {/* Scrim */}
+          {displayedMenu && activeItem?.menu && (
+            <div
+              className="fixed inset-0 z-[-1]"
+              style={{ opacity: isAnimating ? 1 : 0, background: "rgba(0, 0, 0, 0.5)", backdropFilter: "blur(20px) brightness(0.4)", WebkitBackdropFilter: "blur(20px) brightness(0.4)", transition: `opacity ${transitionDuration} ease-out` }}
+              onClick={() => setActiveMenu(null)}
+              onMouseEnter={() => setActiveMenu(null)}
+            />
+          )}
         </div>
-      </div>
+      )}
+
+      {/* ===== Desktop Header (v1/v2) ===== */}
+      {!isV3 && (
+        <div className={`hidden lg:grid h-[56px] grid-cols-[1fr_auto_1fr] items-stretch ${isV2 ? "pl-5 pr-10 pt-3" : "pr-1"}`}>
+          <div className="flex items-stretch overflow-hidden">
+            {navItems.map((item) => (
+              <button key={item.label} onMouseEnter={() => handleMouseEnter(item.label, !!item.menu)} onClick={() => item.menu ? setActiveMenu(activeMenu === item.label ? null : item.label) : setActiveMenu(null)} className={`flex items-center gap-1.5 px-5 text-sm font-normal leading-5 tracking-[-0.15px] transition-colors duration-200 ${activeMenu === item.label ? "text-white" : "text-white/50 hover:text-white"}`}>
+                {item.label}
+                {item.menu && (<svg width="10" height="6" viewBox="0 0 10 6" fill="none" className={`transition-transform duration-250 ${activeMenu === item.label ? "rotate-180" : ""}`}><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>)}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center justify-center">
+            <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/roam-logo.png`} alt="Roam" width={109} height={32} className="object-contain" priority />
+          </div>
+          <div className="flex items-center justify-end gap-2">
+            <button onMouseEnter={() => handleMouseEnter("Existing Members", true)} onClick={() => setActiveMenu(activeMenu === "Existing Members" ? null : "Existing Members")} className={`flex items-center gap-1.5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] transition-colors duration-200 ${activeMenu === "Existing Members" ? "text-white" : "text-white/50 hover:text-white"}`}>
+              Existing Members
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className={`transition-transform duration-200 ${activeMenu === "Existing Members" ? "rotate-180" : ""}`}><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+            <button className="rounded-lg bg-white/5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] text-white shadow-[inset_0px_0.5px_0px_0px_rgba(255,255,255,0.1)] transition-colors hover:bg-white/10">Book Demo</button>
+            <button className="rounded-lg bg-white/5 px-4 py-2 text-sm font-normal leading-5 tracking-[-0.15px] text-white shadow-[inset_0px_0.5px_0px_0px_rgba(255,255,255,0.1)] transition-colors hover:bg-white/10">Free Trial</button>
+          </div>
+        </div>
+      )}
 
       {/* ===== Mobile Header ===== */}
       <div
@@ -534,8 +558,8 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* ===== Desktop Mega Menu ===== */}
-      {displayedMenu && activeItem?.menu && (
+      {/* ===== Desktop Mega Menu (v1/v2) ===== */}
+      {!isV3 && displayedMenu && activeItem?.menu && (
         <div className="hidden lg:block">
           {/* Background */}
           {isV2 ? (
@@ -623,7 +647,7 @@ export default function Navbar() {
                 translateX = "0px";
               }
 
-              const itemCascade: "none" | "in" | "out" = isV2 && isActive ? cascadeState : "none";
+              const itemCascade: "none" | "in" | "out" = isEnhanced && isActive ? cascadeState : "none";
 
               return (
                 <div
@@ -641,7 +665,7 @@ export default function Navbar() {
                     columns={navItem.menu!}
                     align={navItem.label === "Existing Members" ? "right" : "left"}
                     cascade={itemCascade}
-                    spacious={isV2}
+                    spacious={isEnhanced}
                   />
                 </div>
               );
@@ -849,22 +873,17 @@ export default function Navbar() {
       </div>
       {/* Version toggle tab - desktop only */}
       <div className="fixed bottom-4 left-4 z-[100] hidden lg:flex items-center gap-0.5 rounded-lg bg-white/10 p-0.5 backdrop-blur-md border border-white/10">
-        <button
-          onClick={() => setMenuVersion("v1")}
-          className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-            menuVersion === "v1" ? "bg-white text-black" : "text-white/50 hover:text-white"
-          }`}
-        >
-          v1
-        </button>
-        <button
-          onClick={() => setMenuVersion("v2")}
-          className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-            menuVersion === "v2" ? "bg-white text-black" : "text-white/50 hover:text-white"
-          }`}
-        >
-          v2
-        </button>
+        {(["v1", "v2", "v3"] as const).map((v) => (
+          <button
+            key={v}
+            onClick={() => setMenuVersion(v)}
+            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+              menuVersion === v ? "bg-white text-black" : "text-white/50 hover:text-white"
+            }`}
+          >
+            {v}
+          </button>
+        ))}
       </div>
     </nav>
   );
