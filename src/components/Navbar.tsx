@@ -148,7 +148,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     if (items.length <= 4) {
       const isRight = align === "right";
       return (
-        <div className={`flex gap-20 px-10 py-8 ${isRight ? "justify-end" : ""}`}>
+        <div className={`flex px-3 py-8 ${isRight ? "justify-end" : ""}`}>
           <div className={isRight ? "text-right" : ""}>
             <h3 className={`mb-2 text-xs text-white/60 ${headingPadding}`} style={cascadeStyle(0)}>
               {columns[0].heading}
@@ -156,13 +156,13 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
             <ul className="flex flex-col">
               {items.map((item, i) => (
                 <li key={item.title} style={cascadeStyle(i + 1)}>
-                  <a href={item.href} className={`group/link block ${itemPadding}`}>
-                    <span className={`inline-flex items-center gap-1.5 text-lg font-semibold tracking-[-0.3px] text-white/90 transition-colors group-hover/link:text-white ${isRight ? "flex-row-reverse" : ""}`}>
+                  <a href={item.href} className={`group/link block py-1.5 px-5`}>
+                    <span className={`inline-flex items-center gap-1 text-sm font-medium text-white transition-colors group-hover/link:text-white/70 ${isRight ? "flex-row-reverse" : ""}`}>
                       {item.title}
                       {isRight ? (
-                        <svg className="inline-block w-3 h-3 opacity-0 translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50 -scale-x-100" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        <svg className="inline-block w-2.5 h-2.5 opacity-0 translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50 -scale-x-100" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       ) : (
-                        <svg className="inline-block w-3 h-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        <svg className="inline-block w-2.5 h-2.5 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       )}
                     </span>
                   </a>
@@ -181,7 +181,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
     const col3 = items.slice(colSize * 2);
 
     return (
-      <div className="flex gap-20 px-10 py-8">
+      <div className="flex gap-10 px-3 py-8">
         {[col1, col2, col3].map((col, i) => (
           <div key={i}>
             {i === 0 && (
@@ -215,7 +215,7 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
   }
 
   return (
-    <div className="flex gap-20 px-10 py-8">
+    <div className="flex gap-10 px-3 py-8">
       {columns.map((column) => (
         <div key={column.heading}>
           <h3 className={`mb-2 text-xs text-white/60 ${headingPadding}`} style={cascadeStyle(0)}>
@@ -226,11 +226,11 @@ function MegaMenu({ columns, align = "left", cascade = "none", spacious = false 
               <li key={item.title} style={cascadeStyle(i + 1)}>
                 <a
                   href={item.href}
-                  className={`group/link block ${itemPadding}`}
+                  className="group/link block py-1.5 px-5"
                 >
-                  <span className="inline-flex items-center gap-1.5 text-lg font-semibold tracking-[-0.3px] text-white/90 transition-colors group-hover/link:text-white">
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-white transition-colors group-hover/link:text-white/70">
                     {item.title}
-                    <svg className="inline-block w-3 h-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    <svg className="inline-block w-2.5 h-2.5 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-100 group-hover/link:translate-x-0 text-white/50" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </span>
                 </a>
               </li>
@@ -592,10 +592,10 @@ export default function Navbar() {
                     const myIndex = menuLabels.indexOf(navItem.label);
                     const activeIndex = displayedMenu ? menuLabels.indexOf(displayedMenu) : -1;
                     let translateX = "0px";
-                    if (!isActive && slideDirection !== "none") { translateX = myIndex < activeIndex ? "-40px" : "40px"; }
+                    if (!isActive && slideDirection !== "none") { translateX = myIndex < activeIndex ? "-150px" : "150px"; }
                     const itemCascade: "none" | "in" | "out" = isActive ? cascadeState : "none";
                     return (
-                      <div key={navItem.label} data-menu={navItem.label} className="absolute inset-x-0 top-0" style={{ opacity: isActive && isAnimating ? 1 : 0, transform: `translateX(${isActive ? "0px" : translateX})`, pointerEvents: isActive ? "auto" : "none", transition: `all ${transitionDuration} ease-out` }}>
+                      <div key={navItem.label} data-menu={navItem.label} className="absolute inset-x-0 top-0" style={{ opacity: isActive && isAnimating ? 1 : 0, transform: `translateX(${isActive ? "0px" : translateX})`, pointerEvents: isActive ? "auto" : "none", transition: `opacity 150ms ease-out, transform ${transitionDuration} ease-out` }}>
                         <MegaMenu columns={navItem.menu!} align={navItem.label === "Existing Members" ? "right" : "left"} cascade={itemCascade} spacious />
                       </div>
                     );
@@ -772,7 +772,7 @@ export default function Navbar() {
 
               let translateX = "0px";
               if (!isActive && slideDirection !== "none") {
-                translateX = myIndex < activeIndex ? "-40px" : "40px";
+                translateX = myIndex < activeIndex ? "-150px" : "150px";
               } else if (isActive && slideDirection !== "none") {
                 translateX = "0px";
               }
@@ -788,7 +788,7 @@ export default function Navbar() {
                     opacity: isActive && isAnimating ? 1 : 0,
                     transform: `translateX(${isActive ? "0px" : translateX})`,
                     pointerEvents: isActive ? "auto" : "none",
-                    transition: `all ${transitionDuration} ease-out`,
+                    transition: `opacity 150ms ease-out, transform ${transitionDuration} ease-out`,
                   }}
                 >
                   <MegaMenu
